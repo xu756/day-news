@@ -108,6 +108,10 @@ function ensureEnv(name: string): string {
   return value
 }
 
+export function assertLlmConfigured(): void {
+  ensureEnv('LLM_API_KEY')
+}
+
 function getLlmConfig(): {
   baseUrl: string
   apiKey: string

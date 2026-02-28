@@ -2,7 +2,7 @@ import { mkdir, readdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { clusterCandidates, dedupeCandidates, normalizeUrl } from './lib/dedupe'
 import type { PickedStory, RelatedStoryContext, StoryCandidate } from './lib/llm'
-import { pickStories, writeMdx } from './lib/llm'
+import { assertLlmConfigured, pickStories, writeMdx } from './lib/llm'
 import { findFirstOgImage } from './lib/ogImage'
 import { fetchArticleContext } from './lib/parse'
 import { scoreCandidates } from './lib/score'
@@ -162,6 +162,7 @@ async function shouldSkip(targetDir: string, force: boolean): Promise<boolean> {
 
 async function main(): Promise<void> {
   const force = process.argv.includes('--force')
+  assertLlmConfigured()
   const date = getTodayInTimezone(DEFAULT_TIMEZONE)
   const targetDir = path.join(process.cwd(), 'content', 'digest', date)
 
