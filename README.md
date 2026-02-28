@@ -1,5 +1,41 @@
 Welcome to your new TanStack Start app! 
 
+# AI Digest (MVP)
+
+This repo includes a daily AI Digest generator that pulls English first-party sources,
+uses an OpenAI-compatible LLM to write MDX, and stores output in git under
+`content/digest/YYYY-MM-DD/`.
+
+## Configure LLM env
+
+Create `.env.local` with:
+
+```bash
+LLM_API_KEY=your_api_key
+LLM_MODEL=gpt-4.1-mini
+LLM_BASE_URL=https://api.openai.com/v1
+```
+
+`LLM_BASE_URL` and `LLM_MODEL` are optional. If omitted, defaults are used.
+
+## Generate digest manually
+
+```bash
+bun run digest:generate
+```
+
+Use `--force` to regenerate an existing day:
+
+```bash
+bun run digest:generate --force
+```
+
+## Run frontend
+
+```bash
+bun run dev
+```
+
 # Getting Started
 
 To run this application:
