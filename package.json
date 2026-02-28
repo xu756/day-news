@@ -12,18 +12,24 @@
     "test": "vitest run",
     "lint": "eslint",
     "format": "prettier --check .",
-    "check": "prettier --write . && eslint --fix"
+    "check": "prettier --write . && eslint --fix",
+    "digest:generate": "bun scripts/digest/run.ts"
   },
   "dependencies": {
+    "@mozilla/readability": "^0.6.0",
     "@tailwindcss/vite": "^4.2.1",
     "@tanstack/react-devtools": "^0.7.11",
     "@tanstack/react-router": "^1.163.3",
     "@tanstack/react-router-devtools": "^1.163.3",
     "@tanstack/router-plugin": "^1.163.3",
+    "cheerio": "^1.2.0",
+    "date-fns": "^4.1.0",
     "lucide-react": "^0.545.0",
+    "playwright": "^1.58.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "tailwindcss": "^4.2.1"
+    "tailwindcss": "^4.2.1",
+    "undici": "^7.22.0"
   },
   "devDependencies": {
     "@content-collections/core": "^0.13.1",
