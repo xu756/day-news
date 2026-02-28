@@ -79,32 +79,32 @@ const hackerNewsSource: SourceConfig = {
       },
     )
 
-    const items = payload.hits
-      .map((hit) => {
-        const title = normalizeWhitespace(hit.title ?? '')
-        if (!title) return null
+    const items: SourceItem[] = []
+    for (const hit of payload.hits) {
+      const title = normalizeWhitespace(hit.title ?? '')
+      if (!title) continue
 
-        const canonicalUrl =
-          hit.url?.trim() || `https://news.ycombinator.com/item?id=${hit.objectID}`
-        return {
-          title,
-          url: canonicalUrl,
-          publishedAt: new Date(hit.created_at).toISOString(),
-          sourceName: 'Hacker News',
-          sourceType: 'community',
-          hnPoints: Math.max(0, hit.points ?? 0),
-          hnComments: Math.max(0, hit.num_comments ?? 0),
-        } satisfies SourceItem
+      const canonicalUrl =
+        hit.url?.trim() || `https://news.ycombinator.com/item?id=${hit.objectID}`
+
+      items.push({
+        title,
+        url: canonicalUrl,
+        publishedAt: toIsoDate(hit.created_at),
+        sourceName: 'Hacker News',
+        sourceType: 'community',
+        hnPoints: Math.max(0, hit.points ?? 0),
+        hnComments: Math.max(0, hit.num_comments ?? 0),
       })
-      .filter((item): item is SourceItem => item !== null)
+    }
+
+    return items
       .sort((a, b) => {
         const aHeat = (a.hnPoints ?? 0) * 2 + (a.hnComments ?? 0) * 3
         const bHeat = (b.hnPoints ?? 0) * 2 + (b.hnComments ?? 0) * 3
         return bHeat - aHeat
       })
       .slice(0, 20)
-
-    return items
   },
 }
 

@@ -41,6 +41,7 @@
     "@tanstack/eslint-config": "^0.3.4",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/react": "^16.3.2",
+    "@types/jsdom": "^28.0.0",
     "@types/node": "^22.19.13",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",

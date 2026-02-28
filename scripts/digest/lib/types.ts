@@ -31,3 +31,19 @@ export type ArticleContext = {
   excerpt?: string
   text: string
 }
+
+export type CandidateItem = SourceItem & {
+  normalizedUrl: string
+  normalizedTitle: string
+  tokens: string[]
+  entities: string[]
+  clusterId?: string
+  clusterSize?: number
+  score?: number
+}
+
+export type CandidateCluster = {
+  id: string
+  label: string
+  items: CandidateItem[]
+}
