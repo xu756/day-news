@@ -11,6 +11,18 @@ async function sleep(ms: number): Promise<void> {
   await new Promise((resolve) => setTimeout(resolve, ms))
 }
 
+export function mergeHeaders(
+  requestHeaders: HeadersInit | undefined,
+  optionHeaders: Record<string, string> | undefined,
+): HeadersInit {
+  return {
+    'user-agent':
+      'day-news-digest-bot/1.0 (+https://github.com/; AI digest generator)',
+    ...(optionHeaders ?? {}),
+    ...(requestHeaders ?? {}),
+  }
+}
+
 export async function fetchWithRetry(
   input: string,
   init?: RequestInit,
@@ -28,12 +40,7 @@ export async function fetchWithRetry(
     try {
       const response = await fetch(input, {
         ...init,
-        headers: {
-          'user-agent':
-            'day-news-digest-bot/1.0 (+https://github.com/; AI digest generator)',
-          ...(options.headers ?? {}),
-          ...(init?.headers ?? {}),
-        },
+        headers: mergeHeaders(init?.headers, options.headers),
         signal: controller.signal,
       })
 
@@ -82,4 +89,25 @@ export async function fetchText(
 ): Promise<string> {
   const response = await fetchWithRetry(input, init, options)
   return response.text()
+}
+
+export async function fetchFirstSuccessfulText(
+  urls: string[],
+  init?: RequestInit,
+  options?: FetchJsonOptions,
+): Promise<{ url: string; text: string }> {
+  let lastError: unknown = null
+
+  for (const url of urls) {
+    try {
+      const text = await fetchText(url, init, options)
+      return { url, text }
+    } catch (error) {
+      lastError = error
+    }
+  }
+
+  throw new Error(
+    `All candidate URLs failed: ${lastError instanceof Error ? lastError.message : String(lastError)}`,
+  )
 }

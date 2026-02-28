@@ -17,3 +17,17 @@ export type SourceConfig = {
   type: SourceType
   fetchLatest: () => Promise<SourceItem[]>
 }
+
+export type ParsedRssItem = {
+  title: string
+  url: string
+  publishedAt: string
+  snippet?: string
+}
+
+export type ArticleContext = {
+  url: string
+  title?: string
+  excerpt?: string
+  text: string
+}
