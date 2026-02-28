@@ -47,28 +47,52 @@ export const Route = createFileRoute('/digest/$slug')({
   component: DigestPost,
 })
 
+function formatDate(isoString: string): string {
+  return new Date(isoString).toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+}
+
+function sourceNameFromUrl(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '')
+  } catch {
+    return url
+  }
+}
+
 function DigestPost() {
   const post = Route.useLoaderData()
 
   return (
-    <main className="page-wrap px-4 pb-12 pt-16">
-      <article className="island-shell rounded-2xl p-6 sm:p-8">
+    <main className="mx-auto w-full max-w-[820px] px-4 pb-16 pt-10">
+      <article className="rounded border border-[#dbe3df] bg-white px-5 py-6 sm:px-7 sm:py-8">
         {post.heroImage ? (
           <img
             src={post.heroImage}
             alt=""
-            className="mb-6 h-64 w-full rounded-2xl object-cover"
+            className="mb-6 h-56 w-full rounded object-cover sm:h-72"
           />
         ) : null}
-        <p className="island-kicker mb-2">Digest • {post.category}</p>
-        <h1 className="display-title mb-3 text-4xl font-bold text-[var(--sea-ink)] sm:text-5xl">
+
+        <p className="m-0 text-xs font-semibold tracking-[0.14em] text-[#7b8f83] uppercase">
+          AI 资讯速览
+        </p>
+        <h1 className="mb-0 mt-3 text-3xl leading-tight font-semibold text-[#1f322d] sm:text-[2.05rem]">
           {post.title}
         </h1>
-        <p className="mb-6 text-sm text-[var(--sea-ink-soft)]">
-          {new Date(post.pubDate).toLocaleDateString()}
-        </p>
+        <p className="mb-0 mt-2 text-sm text-[#6a7b72]">{formatDate(post.pubDate)}</p>
 
-        <div className="prose prose-slate prose-headings:text-[var(--sea-ink)] prose-p:text-[var(--sea-ink-soft)] prose-li:text-[var(--sea-ink-soft)] prose-ul:text-[var(--sea-ink-soft)] prose-ol:text-[var(--sea-ink-soft)] prose-strong:text-[var(--sea-ink)] prose-a:text-[var(--lagoon-deep)] max-w-none">
+        <section className="mt-6 rounded border border-[#d8e2dd] bg-[#f8fbf9] px-4 py-3">
+          <h2 className="m-0 text-sm font-semibold text-[#2e423c]">为什么是这篇</h2>
+          <p className="mb-0 mt-1.5 text-sm leading-6 text-[#5f7268]">
+            {post.why ?? '该条目由来源权重、时效性与多源交叉评分综合入选。'}
+          </p>
+        </section>
+
+        <div className="prose prose-slate mt-8 max-w-none prose-headings:text-[#243a34] prose-p:text-[#4e6158] prose-li:text-[#4e6158] prose-a:text-[#2e7669]">
           {post.mdx ? (
             <MDXContent
               code={post.mdx}
@@ -79,18 +103,22 @@ function DigestPost() {
           )}
         </div>
 
-        <section className="mt-8 border-t border-[var(--line)] pt-5">
-          <h2 className="m-0 text-lg font-semibold text-[var(--sea-ink)]">
-            Sources
-          </h2>
-          <ul className="mb-0 mt-3 space-y-2 pl-5 text-sm text-[var(--sea-ink-soft)]">
-            {post.sourceUrls.map((url) => (
-              <li key={url}>
-                <a href={url} target="_blank" rel="noreferrer noopener">
-                  {url}
-                </a>
-              </li>
-            ))}
+        <section className="mt-8 border-t border-[#dde5e1] pt-5">
+          <h2 className="m-0 text-lg font-semibold text-[#2e423c]">来源</h2>
+          <ul className="mb-0 mt-3 space-y-2 pl-5 text-sm text-[#566960]">
+            {(post.sources?.length
+              ? post.sources
+              : post.sourceUrls.map((url) => ({ name: sourceNameFromUrl(url), url }))).map(
+              (source) => (
+                <li key={source.url}>
+                  {source.name}
+                  {' · '}
+                  <a href={source.url} target="_blank" rel="noreferrer noopener">
+                    {source.url}
+                  </a>
+                </li>
+              ),
+            )}
           </ul>
         </section>
       </article>

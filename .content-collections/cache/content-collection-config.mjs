@@ -37,9 +37,18 @@ var digest = defineCollection({
     description: z.string(),
     pubDate: z.string(),
     category: z.string(),
+    why: z.string().optional(),
+    candidateCount: z.number().int().positive().optional(),
     content: z.string(),
     heroImage: z.string().optional(),
     sourceUrls: z.array(z.string().url()),
+    sources: z.array(
+      z.object({
+        name: z.string(),
+        url: z.string().url(),
+        sourceType: z.string().optional()
+      })
+    ).optional(),
     slug: z.string().optional()
   }),
   transform: async (document, context) => {

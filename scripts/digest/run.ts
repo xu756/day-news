@@ -1,16 +1,27 @@
-import { mkdir, readdir, writeFile } from 'node:fs/promises'
+import { mkdir, readdir, unlink, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { clusterCandidates, dedupeCandidates, normalizeUrl } from './lib/dedupe'
-import type { PickedStory, RelatedStoryContext, StoryCandidate } from './lib/llm'
+import type {
+  PickedStory,
+  RelatedStoryContext,
+  StoryCandidate,
+  WrittenStory,
+} from './lib/llm'
 import { assertLlmConfigured, pickStories, writeMdx } from './lib/llm'
-import { findFirstOgImage } from './lib/ogImage'
+import { findFirstOgImage, generateCoverImageIfEnabled } from './lib/ogImage'
 import { fetchArticleContext } from './lib/parse'
 import { scoreCandidates } from './lib/score'
-import type { CandidateItem } from './lib/types'
+import type { CandidateItem, SourceType } from './lib/types'
 import { fetchAllSources } from './sources'
 
 const DEFAULT_TIMEZONE = process.env.DIGEST_TIMEZONE || 'Asia/Shanghai'
 const STORIES_PER_DAY = 3
+
+type DigestSource = {
+  name: string
+  url: string
+  sourceType?: SourceType
+}
 
 function getTodayInTimezone(timeZone: string): string {
   return new Intl.DateTimeFormat('en-CA', {
@@ -63,21 +74,107 @@ function toYamlString(value: string): string {
   return JSON.stringify(value)
 }
 
+function sourceNameFromUrl(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '')
+  } catch {
+    return 'Unknown Source'
+  }
+}
+
+function buildFallbackArticle(
+  story: PickedStory,
+  contexts: RelatedStoryContext[],
+): WrittenStory {
+  const summaryItems = contexts.slice(0, 4).map((context) => {
+    const publishedAt = new Date(context.publishedAt).toLocaleDateString('zh-CN')
+    const snippet = context.snippet || context.text || '原文未提供摘要。'
+    return `- **${context.sourceName}**（${publishedAt}）：${snippet.slice(0, 180)}`
+  })
+
+  const sourceUrls = uniqueUrls([
+    ...story.relatedUrls,
+    ...contexts.map((item) => item.url),
+  ]).slice(0, 8)
+
+  return {
+    title: story.headline,
+    description: `${story.headline}：基于英文一手来源的当日摘要。`,
+    category: story.category,
+    sourceUrls,
+    bodyMarkdown: [
+      '## 核心信息',
+      story.why,
+      '',
+      '## 关键信号',
+      ...(summaryItems.length > 0
+        ? summaryItems
+        : ['- 暂无可用摘要，建议查看来源原文。']),
+      '',
+      '## Sources',
+      ...sourceUrls.map((url) => `- ${url}`),
+    ].join('\n'),
+  }
+}
+
+function toDigestSources(params: {
+  sourceUrls: string[]
+  contexts: RelatedStoryContext[]
+  candidateByUrl: Map<string, CandidateItem>
+}): DigestSource[] {
+  const contextByUrl = new Map<string, RelatedStoryContext>()
+  for (const item of params.contexts) {
+    contextByUrl.set(normalizeUrl(item.url), item)
+  }
+
+  return params.sourceUrls.map((url) => {
+    const normalized = normalizeUrl(url)
+    const context = contextByUrl.get(normalized)
+    const candidate = params.candidateByUrl.get(normalized)
+
+    return {
+      name:
+        context?.sourceName ||
+        candidate?.sourceName ||
+        sourceNameFromUrl(url),
+      url,
+      sourceType: context?.sourceType || candidate?.sourceType,
+    }
+  })
+}
+
 function buildFrontmatter(params: {
   title: string
   description: string
   pubDate: string
   category: string
+  why: string
+  candidateCount: number
   sourceUrls: string[]
+  sources: DigestSource[]
   heroImage?: string
 }): string {
-  const sourceLines = params.sourceUrls
-    .map((url) => `  - ${toYamlString(url)}`)
-    .join('\n')
+  const sourceUrlBlock = params.sourceUrls.length
+    ? ['sourceUrls:', ...params.sourceUrls.map((url) => `  - ${toYamlString(url)}`)]
+    : ['sourceUrls: []']
 
-  const heroImageLine = params.heroImage
-    ? `heroImage: ${toYamlString(params.heroImage)}\n`
-    : ''
+  const sourcesBlock = params.sources.length
+    ? [
+        'sources:',
+        ...params.sources.flatMap((source) => {
+          const lines = [
+            `  - name: ${toYamlString(source.name)}`,
+            `    url: ${toYamlString(source.url)}`,
+          ]
+
+          if (source.sourceType) {
+            lines.push(`    sourceType: ${toYamlString(source.sourceType)}`)
+          }
+
+          return lines
+        }),
+      ]
+    : []
 
   return [
     '---',
@@ -85,9 +182,11 @@ function buildFrontmatter(params: {
     `description: ${toYamlString(params.description)}`,
     `pubDate: ${toYamlString(params.pubDate)}`,
     `category: ${toYamlString(params.category)}`,
-    `sourceUrls:`,
-    sourceLines,
-    heroImageLine.trimEnd(),
+    `why: ${toYamlString(params.why)}`,
+    `candidateCount: ${params.candidateCount}`,
+    ...sourceUrlBlock,
+    ...sourcesBlock,
+    params.heroImage ? `heroImage: ${toYamlString(params.heroImage)}` : '',
     '---',
   ]
     .filter(Boolean)
@@ -99,7 +198,10 @@ function buildMdxFile(params: {
   description: string
   pubDate: string
   category: string
+  why: string
+  candidateCount: number
   sourceUrls: string[]
+  sources: DigestSource[]
   heroImage?: string
   bodyMarkdown: string
 }): string {
@@ -160,9 +262,25 @@ async function shouldSkip(targetDir: string, force: boolean): Promise<boolean> {
   }
 }
 
+async function cleanupExistingDailyFiles(targetDir: string): Promise<void> {
+  try {
+    const files = await readdir(targetDir)
+    const targets = files.filter((file) => /^[0-9]{2}-.+\.mdx?$/.test(file))
+
+    await Promise.all(
+      targets.map(async (file) => {
+        await unlink(path.join(targetDir, file))
+      }),
+    )
+  } catch {
+    // Ignore missing directory.
+  }
+}
+
 async function main(): Promise<void> {
   const force = process.argv.includes('--force')
   assertLlmConfigured()
+
   const date = getTodayInTimezone(DEFAULT_TIMEZONE)
   const targetDir = path.join(process.cwd(), 'content', 'digest', date)
 
@@ -171,6 +289,10 @@ async function main(): Promise<void> {
       `[digest] ${date} already has ${STORIES_PER_DAY} files, skipping (use --force to regenerate)`,
     )
     return
+  }
+
+  if (force) {
+    await cleanupExistingDailyFiles(targetDir)
   }
 
   const rawItems = await fetchAllSources()
@@ -191,8 +313,8 @@ async function main(): Promise<void> {
 
   const fallbackStories = topCandidates.slice(0, STORIES_PER_DAY).map((candidate) => ({
     headline: candidate.title,
-    category: 'AI Updates',
-    why: 'Selected by score fallback due insufficient LLM output.',
+    category: 'AI 产业动态',
+    why: '按来源权重、时效性与多源交叉评分自动入选。',
     relatedUrls: [candidate.url],
   }))
 
@@ -208,14 +330,35 @@ async function main(): Promise<void> {
 
   for (const [index, story] of selectedStories.entries()) {
     const contexts = await getContextForStory(story, candidateByUrl)
-    const article = await writeMdx(story, contexts)
+    let article: WrittenStory
 
-    const sourceUrls = uniqueUrls([
-      ...article.sourceUrls,
-      ...story.relatedUrls,
-    ]).slice(0, 8)
+    try {
+      article = await writeMdx(story, contexts)
+    } catch (error) {
+      console.warn(
+        `[digest] writeMdx fallback for \"${story.headline}\": ${error instanceof Error ? error.message : String(error)}`,
+      )
+      article = buildFallbackArticle(story, contexts)
+    }
 
-    const heroImage = article.heroImage ?? (await findFirstOgImage(sourceUrls))
+    const sourceUrls = uniqueUrls([...article.sourceUrls, ...story.relatedUrls]).slice(0, 8)
+    const sources = toDigestSources({
+      sourceUrls,
+      contexts,
+      candidateByUrl,
+    })
+
+    const coverByModel = await generateCoverImageIfEnabled({
+      title: article.title,
+      category: article.category || story.category,
+      why: story.why,
+      date,
+      index,
+    })
+
+    const heroImage =
+      coverByModel ?? article.heroImage ?? (await findFirstOgImage(sourceUrls))
+
     const baseSlug = slugify(article.title)
     let finalSlug = baseSlug
     let suffix = 2
@@ -233,7 +376,10 @@ async function main(): Promise<void> {
       description: article.description,
       pubDate: date,
       category: article.category || story.category,
+      why: story.why,
+      candidateCount: scored.length,
       sourceUrls,
+      sources,
       heroImage,
       bodyMarkdown: article.bodyMarkdown,
     })

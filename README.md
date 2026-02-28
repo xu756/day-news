@@ -14,9 +14,13 @@ Create `.env.local` with:
 LLM_API_KEY=your_api_key
 LLM_MODEL=gpt-4.1-mini
 LLM_BASE_URL=https://api.openai.com/v1
+DIGEST_ENABLE_COVER_MODEL=false
+DIGEST_COVER_MODEL=gpt-image-1
 ```
 
 `LLM_BASE_URL` and `LLM_MODEL` are optional. If omitted, defaults are used.
+`DIGEST_ENABLE_COVER_MODEL` controls whether to call an image model for cover generation.
+If the model does not support image generation, the script falls back to `og:image`.
 
 ## Generate digest manually
 

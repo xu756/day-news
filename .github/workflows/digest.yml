@@ -14,6 +14,8 @@ jobs:
       LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
       LLM_MODEL: ${{ secrets.LLM_MODEL }}
       LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+      DIGEST_ENABLE_COVER_MODEL: ${{ secrets.DIGEST_ENABLE_COVER_MODEL }}
+      DIGEST_COVER_MODEL: ${{ secrets.DIGEST_COVER_MODEL }}
       DIGEST_TIMEZONE: Asia/Shanghai
 
     steps:
