@@ -34,8 +34,7 @@ Rules:
 1) No emotional language, no speculation beyond sources.
 2) Use only provided context and source links.
 3) Structure the article with short sections and bullet points when useful.
-4) End bodyMarkdown with a "## Sources" section and bullet list of source URLs.
-5) Return JSON only. No markdown fences.
+4) Return JSON only. No markdown fences.
 
 Output JSON shape:
 {
@@ -118,10 +117,9 @@ function getLlmConfig(): {
   model: string
 } {
   const apiKey = ensureEnv('LLM_API_KEY')
-  const baseUrl = (process.env.LLM_BASE_URL?.trim() || DEFAULT_BASE_URL).replace(
-    /\/$/,
-    '',
-  )
+  const baseUrl = (
+    process.env.LLM_BASE_URL?.trim() || DEFAULT_BASE_URL
+  ).replace(/\/$/, '')
   const model = process.env.LLM_MODEL?.trim() || DEFAULT_MODEL
 
   return { baseUrl, apiKey, model }
@@ -195,19 +193,11 @@ async function callChatJson<T>(
 function pickStoriesFallback(candidates: StoryCandidate[]): PickedStory[] {
   return candidates.slice(0, 3).map((candidate) => ({
     headline: candidate.title,
-    category: candidate.sourceType === 'official' ? 'Official Updates' : 'Industry',
+    category:
+      candidate.sourceType === 'official' ? 'Official Updates' : 'Industry',
     why: 'High score based on source quality, recency, and cross-source relevance.',
     relatedUrls: [candidate.url],
   }))
-}
-
-function appendSourcesSection(bodyMarkdown: string, sourceUrls: string[]): string {
-  if (/\n##\s+Sources/i.test(bodyMarkdown)) {
-    return bodyMarkdown
-  }
-
-  const sources = sourceUrls.map((url) => `- ${url}`).join('\n')
-  return `${bodyMarkdown.trim()}\n\n## Sources\n${sources}\n`
 }
 
 export async function pickStories(
@@ -280,6 +270,6 @@ Write one digest post in Chinese based on the inputs.
   return {
     ...result,
     sourceUrls: [...new Set(fallbackSources)],
-    bodyMarkdown: appendSourcesSection(result.bodyMarkdown, fallbackSources),
+    bodyMarkdown: result.bodyMarkdown.trim(),
   }
 }

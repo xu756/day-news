@@ -1,0 +1,878 @@
+date: '2026-03-01'
+coverImage: ''
+coverAlt: 2026年3月1日AI资讯速览封面
+candidateCount: 100
+featured:
+  - title: Our agreement with the Department of War
+    url: https://openai.com/index/our-agreement-with-the-department-of-war
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 69.39
+    mentions: 3
+  - title: HN is drowning in AI comments
+    url: https://news.ycombinator.com/item?id=47201629
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 60.6
+    mentions: 3
+  - title: Pentagon chief blocks officers from Ivy League schools and top universities
+    url: https://fortune.com/2026/02/28/pentagon-officer-education-ivy-league-schools-universities-partners-ai-space/
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 59.08
+    mentions: 3
+  - title: The trap Anthropic built for itself
+    url: https://techcrunch.com/2026/02/28/the-trap-anthropic-built-for-itself/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 55.36
+    mentions: 3
+  - title: The billion-dollar infrastructure deals powering the AI boom
+    url: https://techcrunch.com/2026/02/28/billion-dollar-infrastructure-deals-ai-boom-data-centers-openai-oracle-nvidia-microsoft-google-meta/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 55.22
+    mentions: 3
+  - title: OpenAI’s Sam Altman announces Pentagon deal with ‘technical safeguards’
+    url: https://techcrunch.com/2026/02/28/openais-sam-altman-announces-pentagon-deal-with-technical-safeguards/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 55.1
+    mentions: 3
+  - title: Anthropic’s Claude rises to No. 2 in the App Store following Pentagon dispute
+    url: https://techcrunch.com/2026/02/28/anthropics-claude-rises-to-no-2-in-the-app-store-following-pentagon-dispute/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 55.08
+    mentions: 3
+  - title: 'Show HN: Xmloxide – an agent made rust replacement for libxml2'
+    url: https://github.com/jonwiggins/xmloxide
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 54.6
+    mentions: 3
+  - title: Pacific Northwest National Laboratory and OpenAI partner to accelerate federal permitting
+    url: https://openai.com/index/pacific-northwest-national-laboratory
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 53.12
+    mentions: 3
+all:
+  - title: Our agreement with the Department of War
+    url: https://openai.com/index/our-agreement-with-the-department-of-war
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 69.39
+    mentions: 3
+  - title: HN is drowning in AI comments
+    url: https://news.ycombinator.com/item?id=47201629
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 60.6
+    mentions: 3
+  - title: Pentagon chief blocks officers from Ivy League schools and top universities
+    url: https://fortune.com/2026/02/28/pentagon-officer-education-ivy-league-schools-universities-partners-ai-space/
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 59.08
+    mentions: 3
+  - title: The trap Anthropic built for itself
+    url: https://techcrunch.com/2026/02/28/the-trap-anthropic-built-for-itself/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 55.36
+    mentions: 3
+  - title: The billion-dollar infrastructure deals powering the AI boom
+    url: https://techcrunch.com/2026/02/28/billion-dollar-infrastructure-deals-ai-boom-data-centers-openai-oracle-nvidia-microsoft-google-meta/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 55.22
+    mentions: 3
+  - title: OpenAI’s Sam Altman announces Pentagon deal with ‘technical safeguards’
+    url: https://techcrunch.com/2026/02/28/openais-sam-altman-announces-pentagon-deal-with-technical-safeguards/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 55.1
+    mentions: 3
+  - title: Anthropic’s Claude rises to No. 2 in the App Store following Pentagon dispute
+    url: https://techcrunch.com/2026/02/28/anthropics-claude-rises-to-no-2-in-the-app-store-following-pentagon-dispute/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 55.08
+    mentions: 3
+  - title: 'Show HN: Xmloxide – an agent made rust replacement for libxml2'
+    url: https://github.com/jonwiggins/xmloxide
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 54.6
+    mentions: 3
+  - title: Pacific Northwest National Laboratory and OpenAI partner to accelerate federal permitting
+    url: https://openai.com/index/pacific-northwest-national-laboratory
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 53.12
+    mentions: 3
+  - title: Trump orders federal agencies to drop Anthropic’s AI
+    url: https://www.theverge.com/policy/886489/pentagon-anthropic-trump-dod
+    sourceNames:
+      - The Verge AI
+    sourceTypes:
+      - media
+    score: 52.96
+    mentions: 3
+  - title: Defense secretary Pete Hegseth designates Anthropic a supply chain risk
+    url: https://www.theverge.com/policy/886632/pentagon-designates-anthropic-supply-chain-risk-ai-standoff
+    sourceNames:
+      - The Verge AI
+    sourceTypes:
+      - media
+    score: 52.86
+    mentions: 3
+  - title: An update on our mental health-related work
+    url: https://openai.com/index/update-on-mental-health-related-work
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 52.39
+    mentions: 3
+  - title: OpenAI and Amazon announce strategic partnership
+    url: https://openai.com/index/amazon-partnership
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 52.37
+    mentions: 3
+  - title: Joint Statement from OpenAI and Microsoft
+    url: https://openai.com/index/continuing-microsoft-partnership
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 52.33
+    mentions: 3
+  - title: Introducing the Stateful Runtime Environment for Agents in Amazon Bedrock
+    url: https://openai.com/index/introducing-the-stateful-runtime-environment-for-agents-in-amazon-bedrock
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 52.27
+    mentions: 3
+  - title: Scaling AI for everyone
+    url: https://openai.com/index/scaling-ai-for-everyone
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 52.27
+    mentions: 3
+  - title: 'Nano Banana 2: Combining Pro capabilities with lightning-fast speed'
+    url: https://blog.google/innovation-and-ai/technology/ai/nano-banana-2/
+    sourceNames:
+      - Google AI Blog
+    sourceTypes:
+      - official
+    score: 52.17
+    mentions: 3
+  - title: Get more context and understand translations more deeply with new AI-powered updates in Translate.
+    url: https://blog.google/products-and-platforms/products/translate/translation-context-ai-update/
+    sourceNames:
+      - Google AI Blog
+    sourceTypes:
+      - official
+    score: 52.03
+    mentions: 3
+  - title: Google and the Massachusetts AI Hub are launching a new AI training initiative for the Commonwealth.
+    url: https://blog.google/company-news/outreach-and-initiatives/grow-with-google/google-ai-training-massachusetts-residents/
+    sourceNames:
+      - Google AI Blog
+    sourceTypes:
+      - official
+    score: 52.02
+    mentions: 3
+  - title: Build with Nano Banana 2, our best image generation and editing model
+    url: https://blog.google/innovation-and-ai/technology/developers-tools/build-with-nano-banana-2/
+    sourceNames:
+      - Google AI Blog
+    sourceTypes:
+      - official
+    score: 51.92
+    mentions: 3
+  - title: Pentagon moves to designate Anthropic as a supply-chain risk
+    url: https://techcrunch.com/2026/02/27/pentagon-moves-to-designate-anthropic-as-a-supply-chain-risk/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 50.93
+    mentions: 3
+  - title: Running a One Trillion-Parameter LLM Locally on AMD Ryzen AI Max+ Cluster
+    url: https://www.amd.com/en/developer/resources/technical-articles/2026/how-to-run-a-one-trillion-parameter-llm-locally-an-amd.html
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 49.8
+    mentions: 3
+  - title: Trump orders government to stop using Anthropic in battle over AI use
+    url: https://www.bbc.com/news/articles/cn48jj3y8ezo
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 48.72
+    mentions: 3
+  - title: Who’s really running AI? Inside the billion-dollar battle over regulation with Alex Bores
+    url: https://techcrunch.com/podcast/whos-really-running-ai-inside-the-billion-dollar-battle-over-regulation-with-alex-bores/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 48
+    mentions: 3
+  - title: OpenAI Codex and Figma launch seamless code-to-design experience
+    url: https://openai.com/index/figma-partnership
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 47.44
+    mentions: 3
+  - title: Why we no longer evaluate SWE-bench Verified
+    url: https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 47.42
+    mentions: 3
+  - title: Disrupting malicious uses of AI | February 2026
+    url: https://openai.com/index/disrupting-malicious-ai-uses
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 47.27
+    mentions: 3
+  - title: Arvind KC appointed Chief People Officer
+    url: https://openai.com/index/arvind-kc-chief-people-officer
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 47.2
+    mentions: 3
+  - title: OpenAI announces Frontier Alliance Partners
+    url: https://openai.com/index/frontier-alliance-partners
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 47.15
+    mentions: 3
+  - title: We don&#8217;t have to have unsupervised killer robots
+    url: https://www.theverge.com/ai-artificial-intelligence/885963/anthropic-dod-pentagon-tech-workers-ai-labs-react
+    sourceNames:
+      - The Verge AI
+    sourceTypes:
+      - media
+    score: 47.15
+    mentions: 3
+  - title: A more intelligent Android on Samsung Galaxy S26
+    url: https://blog.google/products-and-platforms/platforms/android/samsung-unpacked-2026/
+    sourceNames:
+      - Google AI Blog
+    sourceTypes:
+      - official
+    score: 46.98
+    mentions: 3
+  - title: AI is rewiring how the world’s best Go players think
+    url: https://www.technologyreview.com/2026/02/27/1133624/ai-is-rewiring-how-the-worlds-best-go-players-think/
+    sourceNames:
+      - MIT Technology Review (AI)
+    sourceTypes:
+      - media
+    score: 46.91
+    mentions: 3
+  - title: OpenAI snags $110 billion in investments from Amazon, Nvidia, and Softbank
+    url: https://www.theverge.com/ai-artificial-intelligence/885958/openai-amazon-nvidia-softback-110-billion-investment
+    sourceNames:
+      - The Verge AI
+    sourceTypes:
+      - media
+    score: 46.83
+    mentions: 3
+  - title: 'AI vs. the Pentagon: killer robots, mass surveillance, and red lines'
+    url: https://www.theverge.com/ai-artificial-intelligence/886082/ai-vs-the-pentagon-killer-robots-mass-surveillance-and-red-lines
+    sourceNames:
+      - The Verge AI
+    sourceTypes:
+      - media
+    score: 46.75
+    mentions: 3
+  - title: See the whole picture and find the look with Circle to Search
+    url: https://blog.google/products-and-platforms/products/search/circle-to-search-february-2026/
+    sourceNames:
+      - Google AI Blog
+    sourceTypes:
+      - official
+    score: 46.73
+    mentions: 3
+  - title: The Galaxy S26 is a photography nightmare
+    url: https://www.theverge.com/podcast/885942/samsung-galaxy-s26-ai-camera-nightmare-vergecast
+    sourceNames:
+      - The Verge AI
+    sourceTypes:
+      - media
+    score: 46.66
+    mentions: 3
+  - title: Last 24 hours to get TechCrunch Disrupt 2026 tickets at the lowest rates of the year
+    url: https://techcrunch.com/2026/02/27/last-24-hours-to-get-techcrunch-disrupt-2026-tickets-at-the-lowest-rates-of-the-year/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 46.36
+    mentions: 3
+  - title: 'Anthropic vs. the Pentagon: What’s actually at stake?'
+    url: https://techcrunch.com/2026/02/27/anthropic-vs-the-pentagon-whats-actually-at-stake/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 45.71
+    mentions: 3
+  - title: Employees at Google and OpenAI support Anthropic’s Pentagon stand in open letter
+    url: https://techcrunch.com/2026/02/27/employees-at-google-and-openai-support-anthropics-pentagon-stand-in-open-letter/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 45.57
+    mentions: 3
+  - title: OpenAI raises $110B in one of the largest private funding rounds in history
+    url: https://techcrunch.com/2026/02/27/openai-raises-110b-in-one-of-the-largest-private-funding-rounds-in-history/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 45.27
+    mentions: 3
+  - title: AI music generator Suno hits 2M paid subscribers and $300M in annual recurring revenue
+    url: https://techcrunch.com/2026/02/27/ai-music-generator-suno-hits-2-million-paid-subscribers-and-300m-in-annual-recurring-revenue/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 45.26
+    mentions: 3
+  - title: Musk bashes OpenAI in deposition, saying ‘nobody committed suicide because of Grok’
+    url: https://techcrunch.com/2026/02/27/musk-bashes-openai-in-deposition-saying-nobody-committed-suicide-because-of-grok/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 45.24
+    mentions: 3
+  - title: ChatGPT reaches 900M weekly active users
+    url: https://techcrunch.com/2026/02/27/chatgpt-reaches-900m-weekly-active-users/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 44.91
+    mentions: 3
+  - title: Perplexity’s new Computer is another bet that users need many AI models
+    url: https://techcrunch.com/2026/02/27/perplexitys-new-computer-is-another-bet-that-users-need-many-ai-models/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 44.87
+    mentions: 3
+  - title: "Ask HN: My YC company is hiring one engineer/day but there's not enough work"
+    url: https://news.ycombinator.com/item?id=47200708
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 44.68
+    mentions: 3
+  - title: 'Show HN: Constrained Chess, Play Stockfish with custom natural-language rules'
+    url: https://constrainedchess.vercel.app/
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 43.64
+    mentions: 3
+  - title: Scaling social science research
+    url: https://openai.com/index/scaling-social-science-research
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 43.46
+    mentions: 3
+  - title: Advancing independent research on AI alignment
+    url: https://openai.com/index/advancing-independent-research-ai-alignment
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 43.33
+    mentions: 3
+  - title: Introducing EVMbench
+    url: https://openai.com/index/introducing-evmbench
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 43.31
+    mentions: 3
+  - title: GPT-5.2 derives a new result in theoretical physics
+    url: https://openai.com/index/new-result-theoretical-physics
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 43.23
+    mentions: 3
+  - title: Introducing Lockdown Mode and Elevated Risk labels in ChatGPT
+    url: https://openai.com/index/introducing-lockdown-mode-and-elevated-risk-labels-in-chatgpt
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 43.23
+    mentions: 3
+  - title: 'Beyond rate limits: scaling access to Codex and Sora'
+    url: https://openai.com/index/beyond-rate-limits
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 43.16
+    mentions: 3
+  - title: Introducing OpenAI for India
+    url: https://openai.com/index/openai-for-india
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 43.15
+    mentions: 3
+  - title: Our First Proof submissions
+    url: https://openai.com/index/first-proof-submissions
+    sourceNames:
+      - OpenAI Blog
+    sourceTypes:
+      - official
+    score: 43.11
+    mentions: 3
+  - title: 'Ask HN: Article to share with a technical manager about modern AI coding tools?'
+    url: https://news.ycombinator.com/item?id=47200535
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 43
+    mentions: 3
+  - title: "Ask HN: Builder.ai ($1B Microsoft-backed AI company) who's lookin at the assets?"
+    url: https://news.ycombinator.com/item?id=47200827
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 43
+    mentions: 3
+  - title: 'Show HN: ClawNet – Agent-first communication infrastructure (email, DMs, feed)'
+    url: https://clwnt.com
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 42.96
+    mentions: 3
+  - title: 'A new way to express yourself: Gemini can now create music'
+    url: https://blog.google/innovation-and-ai/products/gemini-app/lyria-3/
+    sourceNames:
+      - Google AI Blog
+    sourceTypes:
+      - official
+    score: 42.92
+    mentions: 3
+  - title: 'Natively Adaptive Interfaces: A new framework for AI accessibility'
+    url: https://blog.google/company-news/outreach-and-initiatives/accessibility/natively-adaptive-interfaces-ai-accessibility/
+    sourceNames:
+      - Google AI Blog
+    sourceTypes:
+      - official
+    score: 42.92
+    mentions: 3
+  - title: “No technology has me dreaming bigger than AI”
+    url: https://blog.google/company-news/inside-google/message-ceo/sundar-pichai-ai-impact-summit-2026/
+    sourceNames:
+      - Google AI Blog
+    sourceTypes:
+      - official
+    score: 42.9
+    mentions: 3
+  - title: Advancing AI benchmarking with Game Arena
+    url: https://blog.google/innovation-and-ai/models-and-research/google-deepmind/kaggle-game-arena-updates/
+    sourceNames:
+      - Google AI Blog
+    sourceTypes:
+      - official
+    score: 42.89
+    mentions: 3
+  - title: 'AI Impact Summit 2026: How we’re partnering to make AI work for everyone'
+    url: https://blog.google/innovation-and-ai/technology/ai/ai-impact-summit-2026-india/
+    sourceNames:
+      - Google AI Blog
+    sourceTypes:
+      - official
+    score: 42.89
+    mentions: 3
+  - title: 9 fun questions to try asking Google Photos
+    url: https://blog.google/products-and-platforms/products/photos/ask-button-ask-photos-tips/
+    sourceNames:
+      - Google AI Blog
+    sourceTypes:
+      - official
+    score: 42.83
+    mentions: 3
+  - title: Helping kids and teens learn and grow online on Safer Internet Day
+    url: https://blog.google/innovation-and-ai/technology/safety-security/safer-internet-day-2026-kids-teens/
+    sourceNames:
+      - Google AI Blog
+    sourceTypes:
+      - official
+    score: 42.83
+    mentions: 3
+  - title: He wanted to use ChatGPT to create sustainable housing. Then it took his life
+    url: https://www.theguardian.com/technology/ng-interactive/2026/feb/28/chatgpt-ai-chatbot-mental-health
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 42.8
+    mentions: 3
+  - title: 'Show HN: A visual sitemap editor that forces you to design structure before UI'
+    url: https://news.ycombinator.com/item?id=47203122
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 42.76
+    mentions: 3
+  - title: AI Impact Summit 2026
+    url: https://blog.google/innovation-and-ai/technology/ai/ai-impact-summit-2026-collection/
+    sourceNames:
+      - Google AI Blog
+    sourceTypes:
+      - official
+    score: 42.74
+    mentions: 3
+  - title: 'Gemini 3 Deep Think: Advancing science, research and engineering'
+    url: https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-deep-think/
+    sourceNames:
+      - Google AI Blog
+    sourceTypes:
+      - official
+    score: 42.73
+    mentions: 3
+  - title: Watch our new Gemini ad ahead of football’s biggest weekend
+    url: https://blog.google/company-news/inside-google/company-announcements/gemini-ad-new-home/
+    sourceNames:
+      - Google AI Blog
+    sourceTypes:
+      - official
+    score: 42.73
+    mentions: 3
+  - title: How Google Cloud is helping Team USA elevate their tricks with AI
+    url: https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/us-ski-snowboard-tool-winter-olympics-2026/
+    sourceNames:
+      - Google AI Blog
+    sourceTypes:
+      - official
+    score: 42.71
+    mentions: 3
+  - title: How we’re helping preserve the genetic information of endangered species with AI
+    url: https://blog.google/innovation-and-ai/technology/ai/ai-to-preserve-endangered-species/
+    sourceNames:
+      - Google AI Blog
+    sourceTypes:
+      - official
+    score: 42.65
+    mentions: 3
+  - title: Iran's supreme leader reportedly killed in air strikes
+    url: https://www.abc.net.au/news/2026-03-01/iran-missiles-shake-gulf-states-after-us-israel-strike-tehran/106401498
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 42.6
+    mentions: 3
+  - title: US tech supplied Israel with AI models, tech's role in warfare – AP News
+    url: https://apnews.com/article/israel-palestinians-ai-weapons-430f6f15aab420806163558732726ad9
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 42.56
+    mentions: 3
+  - title: Wezzly Companion – AI desktop assistant that sees your screen in real time
+    url: https://github.com/idobaibai-wezzly/wezzly-companion-public
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 42.56
+    mentions: 3
+  - title: 'Ask HN: Apart from coding, what do you use AI for daily?'
+    url: https://news.ycombinator.com/item?id=47199791
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 42.52
+    mentions: 3
+  - title: Is using AI for domestic defense more and more nullifying the second amendment?
+    url: https://news.ycombinator.com/item?id=47199732
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 42.52
+    mentions: 3
+  - title: Kansas and AI
+    url: https://www.tbray.org/ongoing/When/202x/2026/02/27/Kansas-and-GenAI
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 42.48
+    mentions: 3
+  - title: I built AI agents that do the grunt work solo founders hate
+    url: https://news.ycombinator.com/item?id=47203220
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 42.44
+    mentions: 3
+  - title: 'Show HN: SkillFortify, Formal verification for AI agents (auto-discovers)'
+    url: https://github.com/varun369/skillfortify
+    sourceNames:
+      - Hacker News
+    sourceTypes:
+      - community
+    score: 42.44
+    mentions: 3
+  - title: Our 2026 Responsible AI Progress Report
+    url: https://blog.google/innovation-and-ai/products/responsible-ai-2026-report-ongoing-work/
+    sourceNames:
+      - Google AI Blog
+    sourceTypes:
+      - official
+    score: 42.42
+    mentions: 3
+  - title: The latest AI news we announced in January
+    url: https://blog.google/innovation-and-ai/products/google-ai-updates-january-2026/
+    sourceNames:
+      - Google AI Blog
+    sourceTypes:
+      - official
+    score: 42.3
+    mentions: 3
+  - title: Finding value with AI and Industry 5.0 transformation
+    url: https://www.technologyreview.com/2026/02/26/1133707/finding-value-with-ai-and-industry-5-0-transformation/
+    sourceNames:
+      - MIT Technology Review (AI)
+    sourceTypes:
+      - media
+    score: 40.13
+    mentions: 3
+  - title: Anthropic refuses Pentagon’s new terms, standing firm on lethal autonomous weapons and mass surveillance
+    url: https://www.theverge.com/news/885773/anthropic-department-of-defense-dod-pentagon-refusal-terms-hegseth-dario-amodei
+    sourceNames:
+      - The Verge AI
+    sourceTypes:
+      - media
+    score: 40.09
+    mentions: 3
+  - title: Google’s Nano Banana 2 brings advanced AI image tools to free users
+    url: https://www.theverge.com/tech/885275/google-nano-banana-2-ai-image-model-gemini-launch
+    sourceNames:
+      - The Verge AI
+    sourceTypes:
+      - media
+    score: 39.72
+    mentions: 3
+  - title: Microsoft&#8217;s Copilot Tasks AI uses its own computer to get things done
+    url: https://www.theverge.com/tech/885741/microsoft-copilot-tasks-ai
+    sourceNames:
+      - The Verge AI
+    sourceTypes:
+      - media
+    score: 39.72
+    mentions: 3
+  - title: Jack Dorsey’s Block cuts nearly half of its staff in AI gamble
+    url: https://www.theverge.com/tech/885710/jack-dorsey-block-layoffs-job-cuts-ai
+    sourceNames:
+      - The Verge AI
+    sourceTypes:
+      - media
+    score: 39.52
+    mentions: 3
+  - title: Anthropic CEO stands firm as Pentagon deadline looms
+    url: https://techcrunch.com/2026/02/26/anthropic-ceo-stands-firm-as-pentagon-deadline-looms/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 38.41
+    mentions: 3
+  - title: So, we’re getting Prada Meta AI glasses, right?
+    url: https://techcrunch.com/2026/02/26/so-were-getting-prada-meta-ai-glasses-right/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 38.18
+    mentions: 3
+  - title: Mistral AI inks a deal with global consulting giant Accenture
+    url: https://techcrunch.com/2026/02/26/mistral-ai-inks-a-deal-with-global-consulting-giant-accenture/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 38.17
+    mentions: 3
+  - title: Read AI launches an email-based ‘digital twin’ to help you with schedules and answers
+    url: https://techcrunch.com/2026/02/26/read-ai-launches-an-email-based-digital-twin-to-help-you-with-schedules-and-answers/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 38.08
+    mentions: 3
+  - title: Jack Dorsey just halved the size of Block’s employee base — and he says your company is next
+    url: https://techcrunch.com/2026/02/26/jack-dorsey-block-layoffs-4000-halved-employees-your-company-is-next/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 37.84
+    mentions: 3
+  - title: Sophia Space raises $10M seed to demo novel space computers
+    url: https://techcrunch.com/2026/02/26/sophia-space-raises-10m-seed-to-demo-novel-space-computers/
+    sourceNames:
+      - TechCrunch AI
+    sourceTypes:
+      - media
+    score: 37.66
+    mentions: 3
+  - title: The human work behind humanoid robots is being hidden
+    url: https://www.technologyreview.com/2026/02/23/1133508/the-human-work-behind-humanoid-robots-is-being-hidden/
+    sourceNames:
+      - MIT Technology Review (AI)
+    sourceTypes:
+      - media
+    score: 34.87
+    mentions: 3
+  - title: A “QuitGPT” campaign is urging people to cancel their ChatGPT subscriptions
+    url: https://www.technologyreview.com/2026/02/10/1132577/a-quitgpt-campaign-is-urging-people-to-cancel-chatgpt-subscriptions/
+    sourceNames:
+      - MIT Technology Review (AI)
+    sourceTypes:
+      - media
+    score: 30.85
+    mentions: 3
+  - title: AI is already making online crimes easier. It could get much worse.
+    url: https://www.technologyreview.com/2026/02/12/1132386/ai-already-making-online-swindles-easier/
+    sourceNames:
+      - MIT Technology Review (AI)
+    sourceTypes:
+      - media
+    score: 30.82
+    mentions: 3
+  - title: Microsoft has a new plan to prove what’s real and what’s AI online
+    url: https://www.technologyreview.com/2026/02/19/1133360/microsoft-has-a-new-plan-to-prove-whats-real-and-whats-ai-online/
+    sourceNames:
+      - MIT Technology Review (AI)
+    sourceTypes:
+      - media
+    score: 30.81
+    mentions: 3
+  - title: What’s next for Chinese open-source AI
+    url: https://www.technologyreview.com/2026/02/12/1132811/whats-next-for-chinese-open-source-ai/
+    sourceNames:
+      - MIT Technology Review (AI)
+    sourceTypes:
+      - media
+    score: 30.81
+    mentions: 3
+  - title: Is a secure AI assistant possible?
+    url: https://www.technologyreview.com/2026/02/11/1132768/is-a-secure-ai-assistant-possible/
+    sourceNames:
+      - MIT Technology Review (AI)
+    sourceTypes:
+      - media
+    score: 30.68
+    mentions: 3
+  - title: Google DeepMind wants to know if chatbots are just virtue signaling
+    url: https://www.technologyreview.com/2026/02/18/1133299/google-deepmind-wants-to-know-if-chatbots-are-just-virtue-signaling/
+    sourceNames:
+      - MIT Technology Review (AI)
+    sourceTypes:
+      - media
+    score: 30.57
+    mentions: 3
+  - title: The robots who predict the future
+    url: https://www.technologyreview.com/2026/02/18/1132579/robots-predict-future-book-review/
+    sourceNames:
+      - MIT Technology Review (AI)
+    sourceTypes:
+      - media
+    score: 30.57
+    mentions: 3

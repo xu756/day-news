@@ -26,7 +26,9 @@ function contentType(filePath: string): string {
   return MIME_TYPES[extname(filePath)] || 'application/octet-stream'
 }
 
-async function serveFile(pathname: string): Promise<{ body: Buffer; type: string }> {
+async function serveFile(
+  pathname: string,
+): Promise<{ body: Buffer; type: string }> {
   const sanitized = normalize(pathname).replace(/^\/+/, '')
   const targetPath = join(DIST_DIR, sanitized)
 
@@ -42,7 +44,9 @@ async function serveFile(pathname: string): Promise<{ body: Buffer; type: string
 
 async function withPage(fn: (page: Page) => Promise<void>): Promise<void> {
   if (!browser) throw new Error('Browser not initialized')
-  const page = await browser.newPage({ viewport: { width: 1365, height: 2200 } })
+  const page = await browser.newPage({
+    viewport: { width: 1365, height: 2200 },
+  })
   try {
     await fn(page)
   } finally {
@@ -53,7 +57,9 @@ async function withPage(fn: (page: Page) => Promise<void>): Promise<void> {
 describe('digest playwright smoke', () => {
   beforeAll(async () => {
     server = createServer(async (request, response) => {
-      const pathname = request.url ? new URL(request.url, BASE_URL).pathname : '/'
+      const pathname = request.url
+        ? new URL(request.url, BASE_URL).pathname
+        : '/'
       const { body, type } = await serveFile(pathname)
       response.writeHead(200, { 'content-type': type })
       response.end(body)
@@ -84,24 +90,34 @@ describe('digest playwright smoke', () => {
     }
   })
 
-  it('shows candidate list link on index and full candidate list on detail', async () => {
+  it('shows daily digest cards and standalone sources page', async () => {
     await withPage(async (page) => {
       await page.goto(`${BASE_URL}/digest`, {
         waitUntil: 'networkidle',
         timeout: 60_000,
       })
 
-      const candidateLink = page.getByText(/从\s*\d+\s*条资讯中筛选/).first()
-      expect(await candidateLink.count()).toBeGreaterThan(0)
+      const dayCard = page.getByTestId('featured-day-card')
+      expect(await dayCard.count()).toBeGreaterThan(0)
 
-      const candidateText = (await candidateLink.textContent())?.trim() ?? ''
-      expect(candidateText).toMatch(/从\s*\d+\s*条资讯中筛选/)
+      await dayCard.click()
+      await page.waitForURL(/\/digest\/.+$/)
+      await page.waitForSelector('main article')
 
-      await candidateLink.click()
-      await page.waitForURL(/#candidate-list/)
+      const sections = await page.locator('main article').count()
+      expect(sections).toBeGreaterThanOrEqual(3)
 
-      const candidateLinks = await page.locator('#candidate-list ol li a').count()
-      expect(candidateLinks).toBeGreaterThan(20)
+      const sourcesLink = page.getByText(/从\s*\d+\s*条资讯中筛选/).first()
+      expect(await sourcesLink.count()).toBeGreaterThan(0)
+
+      await sourcesLink.click()
+      await page.waitForURL(/\/sources$/)
+      await page.waitForSelector('h1')
+
+      expect(
+        await page.getByRole('heading', { level: 1 }).count(),
+      ).toBeGreaterThan(0)
+      expect(await page.locator('main article').count()).toBeGreaterThan(20)
     })
   })
 })

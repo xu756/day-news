@@ -13,6 +13,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DigestIndexRouteImport } from './routes/digest.index'
 import { Route as DigestSlugRouteImport } from './routes/digest.$slug'
+import { Route as DigestSlugSourcesRouteImport } from './routes/digest.$slug.sources'
 
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
@@ -34,38 +35,57 @@ const DigestSlugRoute = DigestSlugRouteImport.update({
   path: '/digest/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DigestSlugSourcesRoute = DigestSlugSourcesRouteImport.update({
+  id: '/sources',
+  path: '/sources',
+  getParentRoute: () => DigestSlugRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/digest/$slug': typeof DigestSlugRoute
+  '/digest/$slug': typeof DigestSlugRouteWithChildren
   '/digest/': typeof DigestIndexRoute
+  '/digest/$slug/sources': typeof DigestSlugSourcesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/digest/$slug': typeof DigestSlugRoute
+  '/digest/$slug': typeof DigestSlugRouteWithChildren
   '/digest': typeof DigestIndexRoute
+  '/digest/$slug/sources': typeof DigestSlugSourcesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/digest/$slug': typeof DigestSlugRoute
+  '/digest/$slug': typeof DigestSlugRouteWithChildren
   '/digest/': typeof DigestIndexRoute
+  '/digest/$slug/sources': typeof DigestSlugSourcesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/digest/$slug' | '/digest/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/digest/$slug'
+    | '/digest/'
+    | '/digest/$slug/sources'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/digest/$slug' | '/digest'
-  id: '__root__' | '/' | '/about' | '/digest/$slug' | '/digest/'
+  to: '/' | '/about' | '/digest/$slug' | '/digest' | '/digest/$slug/sources'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/digest/$slug'
+    | '/digest/'
+    | '/digest/$slug/sources'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  DigestSlugRoute: typeof DigestSlugRoute
+  DigestSlugRoute: typeof DigestSlugRouteWithChildren
   DigestIndexRoute: typeof DigestIndexRoute
 }
 
@@ -99,13 +119,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DigestSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/digest/$slug/sources': {
+      id: '/digest/$slug/sources'
+      path: '/sources'
+      fullPath: '/digest/$slug/sources'
+      preLoaderRoute: typeof DigestSlugSourcesRouteImport
+      parentRoute: typeof DigestSlugRoute
+    }
   }
 }
+
+interface DigestSlugRouteChildren {
+  DigestSlugSourcesRoute: typeof DigestSlugSourcesRoute
+}
+
+const DigestSlugRouteChildren: DigestSlugRouteChildren = {
+  DigestSlugSourcesRoute: DigestSlugSourcesRoute,
+}
+
+const DigestSlugRouteWithChildren = DigestSlugRoute._addFileChildren(
+  DigestSlugRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  DigestSlugRoute: DigestSlugRoute,
+  DigestSlugRoute: DigestSlugRouteWithChildren,
   DigestIndexRoute: DigestIndexRoute,
 }
 export const routeTree = rootRouteImport

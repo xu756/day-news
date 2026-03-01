@@ -1,10 +1,13 @@
+import {
+  formatZhDateLabel,
+  getDigestDays,
+  getSourcesForDay,
+} from '#/lib/digest'
 import { SITE_URL } from '#/lib/site'
-import { Link, createFileRoute } from '@tanstack/react-router'
-import { allDigests } from 'content-collections'
+import { Link, createFileRoute, useNavigate } from '@tanstack/react-router'
 
 const canonical = `${SITE_URL}/digest`
 const DEFAULT_OG_IMAGE = `${SITE_URL}/images/lagoon-1.svg`
-const LOOKBACK_DAYS = 14
 
 export const Route = createFileRoute('/digest/')({
   head: () => ({
@@ -21,136 +24,158 @@ export const Route = createFileRoute('/digest/')({
   component: DigestIndex,
 })
 
-function formatDateLabel(isoString: string): string {
-  return new Date(isoString).toLocaleDateString('zh-CN', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
+function SectionTitles(props: { titles: string[]; compact?: boolean }) {
+  return (
+    <ol className="space-y-2">
+      {props.titles.map((title, index) => {
+        const num = String(index + 1).padStart(2, '0')
+        const isLead = index === 0
+
+        return (
+          <li
+            key={`${num}-${title}`}
+            className={`flex items-start gap-3 ${isLead ? 'text-slate-900' : 'text-slate-500'}`}
+          >
+            <span
+              className={`mt-0.5 w-7 shrink-0 font-mono text-sm font-semibold ${
+                isLead ? 'text-amber-700' : 'text-slate-300'
+              }`}
+            >
+              {num}
+            </span>
+            <span
+              className={
+                isLead
+                  ? 'text-lg leading-8 sm:text-[1.35rem]'
+                  : 'text-base leading-7'
+              }
+            >
+              {title}
+            </span>
+          </li>
+        )
+      })}
+    </ol>
+  )
 }
 
-function sourceNameFromUrl(url: string): string {
-  try {
-    return new URL(url).hostname.replace(/^www\./, '')
-  } catch {
-    return url
+function DayCard(props: {
+  day: string
+  slug: string
+  titles: string[]
+  candidateCount: number
+  featured?: boolean
+}) {
+  const navigate = useNavigate()
+
+  function openDigest() {
+    navigate({
+      to: '/digest/$slug',
+      params: { slug: props.slug },
+    })
   }
+
+  return (
+    <article
+      role="link"
+      tabIndex={0}
+      aria-label={`${formatZhDateLabel(props.day)} 资讯卡片`}
+      onClick={openDigest}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault()
+          openDigest()
+        }
+      }}
+      className={`group relative block rounded-3xl border border-emerald-200/60 bg-white p-6 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-xl sm:p-8 ${
+        props.featured ? 'bg-gradient-to-br from-white to-emerald-50/60' : ''
+      }`}
+    >
+      <span className="mb-5 block h-1.5 w-14 rounded-full bg-gradient-to-r from-emerald-700 to-emerald-300" />
+      <p className="mb-4 font-mono text-xs text-slate-400">
+        {formatZhDateLabel(props.day)}
+      </p>
+      <SectionTitles titles={props.titles} compact={!props.featured} />
+
+      <div className="mt-6 flex flex-wrap items-center justify-between gap-2">
+        <span className="text-sm font-semibold text-emerald-700 transition group-hover:text-emerald-800">
+          阅读全文 →
+        </span>
+        <Link
+          to="/digest/$slug/sources"
+          params={{ slug: props.slug }}
+          onClick={(event) => event.stopPropagation()}
+          className="font-mono text-xs text-slate-400 transition hover:text-slate-700"
+        >
+          从 {props.candidateCount} 条资讯中筛选
+        </Link>
+      </div>
+    </article>
+  )
 }
 
 function DigestIndex() {
-  const lookbackStart = Date.now() - LOOKBACK_DAYS * 24 * 60 * 60 * 1000
-
-  const recent = [...allDigests]
-    .sort(
-      (a, b) => new Date(b.pubDate).valueOf() - new Date(a.pubDate).valueOf(),
-    )
-    .filter((item) => new Date(item.pubDate).valueOf() >= lookbackStart)
-
-  const groupedByDay = Array.from(
-    recent.reduce((map, item) => {
-      const day = item.pubDate.slice(0, 10)
-      const current = map.get(day) ?? []
-      current.push(item)
-      map.set(day, current)
-      return map
-    }, new Map<string, typeof recent>()),
-  )
+  const digestDays = getDigestDays()
+  const featured = digestDays[0]
+  const archive = digestDays.slice(1)
 
   return (
-    <main className="mx-auto w-full max-w-[760px] px-4 pb-16 pt-10">
-      <section className="mb-8 border-b border-[#c9d3cd] pb-5">
-        <p className="m-0 text-[11px] font-semibold tracking-[0.16em] text-[#4f6b5d] uppercase">
-          AI 资讯速览
-        </p>
-        <h1 className="mt-4 text-3xl leading-tight font-semibold tracking-tight text-[#223531] sm:text-[2.2rem]">
+    <main className="mx-auto w-full max-w-5xl px-4 pb-8 pt-8 sm:px-6 lg:px-8">
+      <section className="py-10 text-center sm:py-14">
+        <h1 className="mx-auto max-w-3xl text-balance font-serif text-4xl font-bold leading-tight text-slate-900 sm:text-6xl sm:leading-tight">
           英文一手信源，如实呈现
         </h1>
-        <p className="mb-0 mt-3 text-sm leading-6 text-[#5f7268]">
-          每天 3 条，保留入选原因和原文来源，方便回溯。
+        <p className="mt-3 text-sm tracking-wide text-slate-500 sm:text-base">
+          不炸裂，不夸张，不接商单
         </p>
       </section>
 
-      {groupedByDay.length === 0 ? (
-        <section className="rounded border border-[#d6dfda] bg-white px-5 py-6 text-sm text-[#5f7268]">
-          暂无日报内容。运行 <code>bun run digest:generate</code> 生成今日内容。
+      {digestDays.length === 0 ? (
+        <section className="rounded-2xl border border-slate-200 bg-white p-6 text-slate-600 shadow-sm">
+          暂无日报内容。运行{' '}
+          <code className="rounded bg-slate-100 px-1.5 py-0.5">
+            bun run digest:generate
+          </code>{' '}
+          生成今日内容。
         </section>
       ) : (
-        <div className="space-y-8">
-          {groupedByDay.map(([day, items]) => {
-            const dayCandidateCount = items[0]?.candidateCount
+        <>
+          {featured ? (
+            <div data-testid="featured-day-card">
+              <DayCard
+                day={featured.day}
+                slug={featured.lead.slug}
+                titles={featured.posts.slice(0, 3).map((post) => post.title)}
+                candidateCount={
+                  getSourcesForDay(featured.day, featured.posts).candidateCount
+                }
+                featured
+              />
+            </div>
+          ) : null}
 
-            return (
-              <section key={day} className="space-y-3">
-                <header className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-                  <h2 className="m-0 text-sm font-semibold tracking-wide text-[#6b7f73] uppercase">
-                    {formatDateLabel(`${day}T00:00:00.000Z`)}
-                  </h2>
-                  {typeof dayCandidateCount === 'number' && items[0] ? (
-                    <a
-                      href={`/digest/${encodeURIComponent(items[0].slug)}#candidate-list`}
-                      className="m-0 text-xs text-[#8a9a91]"
-                    >
-                      从 {dayCandidateCount} 条资讯中筛选
-                    </a>
-                  ) : null}
-                </header>
+          <ul className="mt-5 space-y-4">
+            {archive.map((digestDay) => (
+              <li key={digestDay.day}>
+                <DayCard
+                  day={digestDay.day}
+                  slug={digestDay.lead.slug}
+                  titles={digestDay.posts.slice(0, 3).map((post) => post.title)}
+                  candidateCount={
+                    getSourcesForDay(digestDay.day, digestDay.posts)
+                      .candidateCount
+                  }
+                />
+              </li>
+            ))}
+          </ul>
 
-                <div className="space-y-3">
-                  {items.slice(0, 3).map((item, index) => {
-                    const sourceNames = Array.from(
-                      new Set(
-                        item.sources?.length
-                          ? item.sources.map((source) => source.name)
-                          : item.sourceUrls.map((url) =>
-                              sourceNameFromUrl(url),
-                            ),
-                      ),
-                    ).slice(0, 4)
-
-                    return (
-                      <article
-                        key={item.slug}
-                        className="rounded border border-[#dbe3df] bg-white px-4 py-4 sm:px-5"
-                      >
-                        <p className="m-0 text-xs font-semibold tracking-wide text-[#90a097] uppercase">
-                          {String(index + 1).padStart(2, '0')}
-                        </p>
-
-                        <h3 className="mb-0 mt-2 text-[1.02rem] leading-6 font-semibold text-[#1f322d]">
-                          <Link
-                            to="/digest/$slug"
-                            params={{ slug: item.slug }}
-                            className="text-inherit no-underline hover:underline"
-                          >
-                            {item.title}
-                          </Link>
-                        </h3>
-
-                        <p className="mb-0 mt-2 text-sm leading-6 text-[#5f7268]">
-                          入选理由：
-                          {item.why ?? '按来源权重、时效性与多源交叉评分入选。'}
-                        </p>
-
-                        {sourceNames.length > 0 ? (
-                          <div className="mt-3 flex flex-wrap gap-2">
-                            {sourceNames.map((name) => (
-                              <span
-                                key={`${item.slug}-${name}`}
-                                className="rounded border border-[#d2dcd7] bg-[#f8fbf9] px-2.5 py-1 text-xs text-[#5a6d62]"
-                              >
-                                来源：{name}
-                              </span>
-                            ))}
-                          </div>
-                        ) : null}
-                      </article>
-                    )
-                  })}
-                </div>
-              </section>
-            )
-          })}
-        </div>
+          <p className="mt-6 text-center text-sm text-slate-500">
+            <a href="/digest" className="transition hover:text-slate-800">
+              查看全部存档 →
+            </a>
+          </p>
+        </>
       )}
     </main>
   )

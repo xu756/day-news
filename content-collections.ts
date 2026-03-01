@@ -27,6 +27,7 @@ const digest = defineCollection({
         }),
       )
       .optional(),
+    sourceDate: z.string().optional(),
     candidateItems: z
       .array(
         z.object({

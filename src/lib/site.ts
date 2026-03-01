@@ -1,4 +1,3 @@
-export const SITE_TITLE = 'TanStack Start'
-export const SITE_DESCRIPTION =
-  'A tropical, breathable app starter with full-document SSR, server functions, streaming, and type-safe routing.'
-export const SITE_URL = 'https://example.com'
+export const SITE_TITLE = 'AI资讯速览'
+export const SITE_DESCRIPTION = '英文一手信源，如实呈现。'
+export const SITE_URL = 'https://ai-digest.liziran.com'

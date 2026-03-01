@@ -1,11 +1,7 @@
 import { mkdir, readdir, unlink, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { clusterCandidates, dedupeCandidates, normalizeUrl } from './lib/dedupe'
-import type {
-  PickedStory,
-  RelatedStoryContext,
-  WrittenStory,
-} from './lib/llm'
+import type { PickedStory, RelatedStoryContext, WrittenStory } from './lib/llm'
 import { assertLlmConfigured, writeMdx } from './lib/llm'
 import { findFirstOgImage, generateCoverImageIfEnabled } from './lib/ogImage'
 import { selectStoriesByAttention } from './lib/picker'
@@ -83,7 +79,9 @@ function buildFallbackArticle(
   contexts: RelatedStoryContext[],
 ): WrittenStory {
   const summaryItems = contexts.slice(0, 4).map((context) => {
-    const publishedAt = new Date(context.publishedAt).toLocaleDateString('zh-CN')
+    const publishedAt = new Date(context.publishedAt).toLocaleDateString(
+      'zh-CN',
+    )
     const snippet = context.snippet || context.text || '原文未提供摘要。'
     return `- **${context.sourceName}**（${publishedAt}）：${snippet.slice(0, 180)}`
   })
@@ -106,9 +104,6 @@ function buildFallbackArticle(
       ...(summaryItems.length > 0
         ? summaryItems
         : ['- 暂无可用摘要，建议查看来源原文。']),
-      '',
-      '## Sources',
-      ...sourceUrls.map((url) => `- ${url}`),
     ].join('\n'),
   }
 }
@@ -130,9 +125,7 @@ function toDigestSources(params: {
 
     return {
       name:
-        context?.sourceName ||
-        candidate?.sourceName ||
-        sourceNameFromUrl(url),
+        context?.sourceName || candidate?.sourceName || sourceNameFromUrl(url),
       url,
       sourceType: context?.sourceType || candidate?.sourceType,
     }
@@ -162,7 +155,10 @@ function buildFrontmatter(params: {
   heroImage?: string
 }): string {
   const sourceUrlBlock = params.sourceUrls.length
-    ? ['sourceUrls:', ...params.sourceUrls.map((url) => `  - ${toYamlString(url)}`)]
+    ? [
+        'sourceUrls:',
+        ...params.sourceUrls.map((url) => `  - ${toYamlString(url)}`),
+      ]
     : ['sourceUrls: []']
 
   const sourcesBlock = params.sources.length
@@ -288,7 +284,9 @@ async function shouldSkip(targetDir: string, force: boolean): Promise<boolean> {
 
   try {
     const files = await readdir(targetDir)
-    const count = files.filter((file) => /^[0-9]{2}-.+\.mdx?$/.test(file)).length
+    const count = files.filter((file) =>
+      /^[0-9]{2}-.+\.mdx?$/.test(file),
+    ).length
     return count >= STORIES_PER_DAY
   } catch {
     return false
@@ -365,7 +363,10 @@ async function main(): Promise<void> {
       article = buildFallbackArticle(story, contexts)
     }
 
-    const sourceUrls = uniqueUrls([...article.sourceUrls, ...story.relatedUrls]).slice(0, 8)
+    const sourceUrls = uniqueUrls([
+      ...article.sourceUrls,
+      ...story.relatedUrls,
+    ]).slice(0, 8)
     const sources = toDigestSources({
       sourceUrls,
       contexts,
