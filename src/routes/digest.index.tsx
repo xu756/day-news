@@ -86,10 +86,13 @@ function DigestIndex() {
                   <h2 className="m-0 text-sm font-semibold tracking-wide text-[#6b7f73] uppercase">
                     {formatDateLabel(`${day}T00:00:00.000Z`)}
                   </h2>
-                  {typeof dayCandidateCount === 'number' ? (
-                    <p className="m-0 text-xs text-[#8a9a91]">
+                  {typeof dayCandidateCount === 'number' && items[0] ? (
+                    <a
+                      href={`/digest/${encodeURIComponent(items[0].slug)}#candidate-list`}
+                      className="m-0 text-xs text-[#8a9a91]"
+                    >
                       从 {dayCandidateCount} 条资讯中筛选
-                    </p>
+                    </a>
                   ) : null}
                 </header>
 

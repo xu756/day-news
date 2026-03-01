@@ -23,6 +23,14 @@ type DigestSource = {
   sourceType?: SourceType
 }
 
+type DigestCandidateItem = {
+  title: string
+  url: string
+  sourceName?: string
+  sourceType?: SourceType
+  score?: number
+}
+
 function getTodayInTimezone(timeZone: string): string {
   return new Intl.DateTimeFormat('en-CA', {
     timeZone,
@@ -143,6 +151,16 @@ function toDigestSources(params: {
   })
 }
 
+function toDigestCandidateItems(items: CandidateItem[]): DigestCandidateItem[] {
+  return items.slice(0, 150).map((item) => ({
+    title: item.title,
+    url: item.url,
+    sourceName: item.sourceName,
+    sourceType: item.sourceType,
+    score: item.score,
+  }))
+}
+
 function buildFrontmatter(params: {
   title: string
   description: string
@@ -152,6 +170,7 @@ function buildFrontmatter(params: {
   candidateCount: number
   sourceUrls: string[]
   sources: DigestSource[]
+  candidateItems: DigestCandidateItem[]
   heroImage?: string
 }): string {
   const sourceUrlBlock = params.sourceUrls.length
@@ -176,6 +195,30 @@ function buildFrontmatter(params: {
       ]
     : []
 
+  const candidateItemsBlock = params.candidateItems.length
+    ? [
+        'candidateItems:',
+        ...params.candidateItems.flatMap((item) => {
+          const lines = [
+            `  - title: ${toYamlString(item.title)}`,
+            `    url: ${toYamlString(item.url)}`,
+          ]
+
+          if (item.sourceName) {
+            lines.push(`    sourceName: ${toYamlString(item.sourceName)}`)
+          }
+          if (item.sourceType) {
+            lines.push(`    sourceType: ${toYamlString(item.sourceType)}`)
+          }
+          if (typeof item.score === 'number') {
+            lines.push(`    score: ${item.score}`)
+          }
+
+          return lines
+        }),
+      ]
+    : []
+
   return [
     '---',
     `title: ${toYamlString(params.title)}`,
@@ -186,6 +229,7 @@ function buildFrontmatter(params: {
     `candidateCount: ${params.candidateCount}`,
     ...sourceUrlBlock,
     ...sourcesBlock,
+    ...candidateItemsBlock,
     params.heroImage ? `heroImage: ${toYamlString(params.heroImage)}` : '',
     '---',
   ]
@@ -202,6 +246,7 @@ function buildMdxFile(params: {
   candidateCount: number
   sourceUrls: string[]
   sources: DigestSource[]
+  candidateItems: DigestCandidateItem[]
   heroImage?: string
   bodyMarkdown: string
 }): string {
@@ -319,6 +364,7 @@ async function main(): Promise<void> {
   }))
 
   const selectedStories = [...stories, ...fallbackStories].slice(0, STORIES_PER_DAY)
+  const candidateItemsForDay = toDigestCandidateItems(scored)
 
   const candidateByUrl = new Map<string, CandidateItem>()
   for (const item of scored) {
@@ -380,6 +426,7 @@ async function main(): Promise<void> {
       candidateCount: scored.length,
       sourceUrls,
       sources,
+      candidateItems: candidateItemsForDay,
       heroImage,
       bodyMarkdown: article.bodyMarkdown,
     })

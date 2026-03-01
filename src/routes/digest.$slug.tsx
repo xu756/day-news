@@ -65,6 +65,8 @@ function sourceNameFromUrl(url: string): string {
 
 function DigestPost() {
   const post = Route.useLoaderData()
+  const candidateItems = post.candidateItems ?? []
+  const candidateCount = post.candidateCount ?? candidateItems.length
 
   return (
     <main className="mx-auto w-full max-w-[820px] px-4 pb-16 pt-10">
@@ -121,6 +123,27 @@ function DigestPost() {
             )}
           </ul>
         </section>
+
+        {candidateItems.length > 0 ? (
+          <section id="candidate-list" className="mt-8 border-t border-[#dde5e1] pt-5">
+            <header className="mb-3 flex flex-wrap items-end justify-between gap-x-3 gap-y-1">
+              <h2 className="m-0 text-lg font-semibold text-[#2e423c]">候选资讯</h2>
+              <p className="m-0 text-xs text-[#7d8d84]">
+                从 {candidateCount} 条资讯中筛选
+              </p>
+            </header>
+            <ol className="mb-0 mt-0 space-y-2 pl-5 text-sm text-[#4f6259]">
+              {candidateItems.map((item, index) => (
+                <li key={`${item.url}-${index}`} className="leading-6">
+                  <a href={item.url} target="_blank" rel="noreferrer noopener">
+                    {item.title}
+                  </a>
+                  {item.sourceName ? ` · ${item.sourceName}` : ''}
+                </li>
+              ))}
+            </ol>
+          </section>
+        ) : null}
       </article>
     </main>
   )

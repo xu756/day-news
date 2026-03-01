@@ -55,6 +55,17 @@ const digest = defineCollection({
         }),
       )
       .optional(),
+    candidateItems: z
+      .array(
+        z.object({
+          title: z.string(),
+          url: z.string().url(),
+          sourceName: z.string().optional(),
+          sourceType: z.string().optional(),
+          score: z.number().optional(),
+        }),
+      )
+      .optional(),
     slug: z.string().optional(),
   }),
   transform: async (document, context) => {
