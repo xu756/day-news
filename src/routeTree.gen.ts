@@ -12,9 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DigestIndexRouteImport } from './routes/digest.index'
-import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as DigestSlugRouteImport } from './routes/digest.$slug'
-import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
@@ -31,74 +29,43 @@ const DigestIndexRoute = DigestIndexRouteImport.update({
   path: '/digest/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogIndexRoute = BlogIndexRouteImport.update({
-  id: '/blog/',
-  path: '/blog/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const DigestSlugRoute = DigestSlugRouteImport.update({
   id: '/digest/$slug',
   path: '/digest/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/blog/$slug',
-  path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog/$slug': typeof BlogSlugRoute
   '/digest/$slug': typeof DigestSlugRoute
-  '/blog/': typeof BlogIndexRoute
   '/digest/': typeof DigestIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog/$slug': typeof BlogSlugRoute
   '/digest/$slug': typeof DigestSlugRoute
-  '/blog': typeof BlogIndexRoute
   '/digest': typeof DigestIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog/$slug': typeof BlogSlugRoute
   '/digest/$slug': typeof DigestSlugRoute
-  '/blog/': typeof BlogIndexRoute
   '/digest/': typeof DigestIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/about'
-    | '/blog/$slug'
-    | '/digest/$slug'
-    | '/blog/'
-    | '/digest/'
+  fullPaths: '/' | '/about' | '/digest/$slug' | '/digest/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/blog/$slug' | '/digest/$slug' | '/blog' | '/digest'
-  id:
-    | '__root__'
-    | '/'
-    | '/about'
-    | '/blog/$slug'
-    | '/digest/$slug'
-    | '/blog/'
-    | '/digest/'
+  to: '/' | '/about' | '/digest/$slug' | '/digest'
+  id: '__root__' | '/' | '/about' | '/digest/$slug' | '/digest/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  BlogSlugRoute: typeof BlogSlugRoute
   DigestSlugRoute: typeof DigestSlugRoute
-  BlogIndexRoute: typeof BlogIndexRoute
   DigestIndexRoute: typeof DigestIndexRoute
 }
 
@@ -125,25 +92,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DigestIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/': {
-      id: '/blog/'
-      path: '/blog'
-      fullPath: '/blog/'
-      preLoaderRoute: typeof BlogIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/digest/$slug': {
       id: '/digest/$slug'
       path: '/digest/$slug'
       fullPath: '/digest/$slug'
       preLoaderRoute: typeof DigestSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog/$slug': {
-      id: '/blog/$slug'
-      path: '/blog/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -152,9 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  BlogSlugRoute: BlogSlugRoute,
   DigestSlugRoute: DigestSlugRoute,
-  BlogIndexRoute: BlogIndexRoute,
   DigestIndexRoute: DigestIndexRoute,
 }
 export const routeTree = rootRouteImport
