@@ -1,0 +1,41 @@
+---
+title: Xmloxide：基于 Rust 的 libxml2 替代方案
+description: Xmloxide 是一个纯 Rust 实现的 libxml2 重写版本，旨在解决原库停止维护带来的安全问题，提供内存安全和高性能的 XML/HTML 解析功能。
+pubDate: '2026-02-28'
+category: Community
+why: 基于英文一手信源抓取并去重后进入候选；HN 热度 50 points / 33 comments；综合评分 54.6；关联来源 1 条
+candidateCount: 100
+sourceUrls:
+  - 'https://github.com/jonwiggins/xmloxide'
+sources:
+  - name: Hacker News
+    url: 'https://github.com/jonwiggins/xmloxide'
+    sourceType: community
+sourceDate: '2026-02-28'
+---
+
+Xmloxide 是一个纯 Rust 实现的 libxml2 重写版本，旨在替代已停止维护的 libxml2 库。
+
+**项目背景**
+
+- libxml2 于 2025 年 12 月正式停止维护，且存在已知安全问题。
+- Xmloxide 目标是提供内存安全、高性能且符合标准的替代方案。
+
+**主要特性**
+
+- **内存安全**：基于 Arena 的树结构，公共 API 无 `unsafe` 代码。
+- **标准符合**：通过 100% 的 W3C XML 一致性测试（1727/1727）。
+- **解析能力**：支持 DOM、SAX2、XmlReader、增量 HTML 解析及错误恢复。
+- **功能支持**：包含 XPath 1.0、DTD/RelaxNG/XSD 验证、C14N、XInclude 等。
+- **兼容性**：提供完整的 C/C++ FFI 接口，支持零拷贝。
+
+**性能对比**
+
+- **解析**：总体与 libxml2 持平（慢 3-4%），SVG 解析快 12%。
+- **序列化**：比 libxml2 快 1.5-2.4 倍。
+- **XPath**：比 libxml2 快 1.1-2.7 倍。
+
+**测试情况**
+
+- 通过 100% 的 libxml2 兼容性测试套件（119/119）。
+- 包含 785 个单元测试和 112 个 FFI 测试。

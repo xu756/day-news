@@ -1,7 +1,8 @@
 import { MdxCallout } from '#/components/MdxCallout'
 import { MdxMetrics } from '#/components/MdxMetrics'
+import { RevealOnScroll } from '#/components/RevealOnScroll'
+import type { DigestPost } from '#/lib/digest'
 import {
-  type DigestPost,
   findDigestDayBySlug,
   formatZhDateLabel,
   getDayConfig,
@@ -232,29 +233,32 @@ function DigestPost() {
         <div className="mx-auto mt-5 h-1 w-16 rounded-full bg-gradient-to-r from-emerald-700 to-emerald-300" />
       </header>
 
-      <section className="mb-6 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-        {dayConfig?.coverImage ? (
-          <img
-            src={dayConfig.coverImage}
-            alt={
-              dayConfig.coverAlt || `${formatZhDateLabel(digestDay.day)} 封面图`
-            }
-            className="block aspect-[16/7] w-full object-cover"
-            loading="lazy"
-          />
-        ) : (
-          <div className="flex aspect-[16/7] items-center justify-center bg-gradient-to-br from-slate-50 to-emerald-50/70">
-            <div className="text-center">
-              <p className="font-mono text-xs uppercase tracking-[0.16em] text-slate-400">
-                Cover Slot
-              </p>
-              <p className="mt-2 text-sm text-slate-500">
-                在 data.yaml 设置 coverImage 后会显示当天封面
-              </p>
+      <RevealOnScroll className="will-change-transform" delayMs={30}>
+        <section className="mb-6 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+          {dayConfig?.coverImage ? (
+            <img
+              src={dayConfig.coverImage}
+              alt={
+                dayConfig.coverAlt ||
+                `${formatZhDateLabel(digestDay.day)} 封面图`
+              }
+              className="block aspect-[16/7] w-full object-cover"
+              loading="lazy"
+            />
+          ) : (
+            <div className="flex aspect-[16/7] items-center justify-center bg-gradient-to-br from-slate-50 to-emerald-50/70">
+              <div className="text-center">
+                <p className="font-mono text-xs uppercase tracking-[0.16em] text-slate-400">
+                  Cover Slot
+                </p>
+                <p className="mt-2 text-sm text-slate-500">
+                  在 data.yaml 设置 coverImage 后会显示当天封面
+                </p>
+              </div>
             </div>
-          </div>
-        )}
-      </section>
+          )}
+        </section>
+      </RevealOnScroll>
 
       <main className="space-y-5">
         {digestDay.posts.map((post, index) => {
@@ -262,114 +266,122 @@ function DigestPost() {
           const sectionSources = buildSectionSources(post, sourceTitleLookup)
 
           return (
-            <article
+            <RevealOnScroll
               key={post.slug}
-              className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7"
+              className="will-change-transform"
+              delayMs={Math.min(80 + index * 90, 620)}
             >
-              <h2 className="flex items-start gap-3 text-xl font-bold text-slate-900 sm:text-2xl">
-                <span className="mt-0.5 w-10 shrink-0 font-mono text-2xl text-amber-700 sm:text-3xl">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <span>{post.title}</span>
-              </h2>
+              <article className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
+                <h2 className="flex items-start gap-3 text-xl font-bold text-slate-900 sm:text-2xl">
+                  <span className="mt-0.5 w-10 shrink-0 font-mono text-2xl text-amber-700 sm:text-3xl">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span>{post.title}</span>
+                </h2>
 
-              <p className="mt-4 text-sm leading-7 text-slate-700 sm:text-base">
-                <strong className="mr-1 text-slate-900">
-                  为什么值得关注：
-                </strong>
-                {post.why ?? '该条目由来源权重、时效性与多源交叉评分综合入选。'}
-              </p>
+                <p className="mt-4 text-sm leading-7 text-slate-700 sm:text-base">
+                  <strong className="mr-1 text-slate-900">
+                    为什么值得关注：
+                  </strong>
+                  {post.why ??
+                    '该条目由来源权重、时效性与多源交叉评分综合入选。'}
+                </p>
 
-              <div className="prose prose-slate mt-4 max-w-none prose-headings:text-emerald-800 prose-a:text-blue-700 prose-a:no-underline hover:prose-a:text-blue-800">
-                {post.mdx ? (
-                  <MDXContent
-                    code={post.mdx}
-                    components={{ MdxCallout, MdxMetrics }}
-                  />
-                ) : (
-                  <div dangerouslySetInnerHTML={{ __html: post.html ?? '' }} />
-                )}
-              </div>
-
-              {keyTags.length > 0 ? (
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {keyTags.map((tag) => (
-                    <span
-                      key={`${post.slug}-${tag}`}
-                      className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-sm text-emerald-800"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                <div className="prose prose-slate mt-4 max-w-none prose-headings:text-emerald-800 prose-a:text-blue-700 prose-a:no-underline hover:prose-a:text-blue-800">
+                  {post.mdx ? (
+                    <MDXContent
+                      code={post.mdx}
+                      components={{ MdxCallout, MdxMetrics }}
+                    />
+                  ) : (
+                    <div
+                      dangerouslySetInnerHTML={{ __html: post.html ?? '' }}
+                    />
+                  )}
                 </div>
-              ) : null}
 
-              {sectionSources.length > 0 ? (
-                <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                  <p className="mb-2 text-lg font-semibold text-slate-400">
-                    来源
-                  </p>
-                  <div className="space-y-1.5">
-                    {sectionSources.map((source) => (
-                      <a
-                        key={`${post.slug}-${source.url}`}
-                        href={source.url}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        className="flex flex-wrap items-center gap-2 text-sm text-slate-600 transition hover:text-slate-900"
+                {keyTags.length > 0 ? (
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {keyTags.map((tag) => (
+                      <span
+                        key={`${post.slug}-${tag}`}
+                        className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-sm text-emerald-800"
                       >
-                        <span>{source.title}</span>
-                        <span className="rounded-md bg-slate-200 px-2 py-0.5 font-mono text-[11px] text-slate-500">
-                          {source.domain}
-                        </span>
-                      </a>
+                        {tag}
+                      </span>
                     ))}
                   </div>
-                </div>
-              ) : null}
-            </article>
+                ) : null}
+
+                {sectionSources.length > 0 ? (
+                  <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                    <p className="mb-2 text-lg font-semibold text-slate-400">
+                      来源
+                    </p>
+                    <div className="space-y-1.5">
+                      {sectionSources.map((source) => (
+                        <a
+                          key={`${post.slug}-${source.url}`}
+                          href={source.url}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          className="flex flex-wrap items-center gap-2 text-sm text-slate-600 transition hover:text-slate-900"
+                        >
+                          <span>{source.title}</span>
+                          <span className="rounded-md bg-slate-200 px-2 py-0.5 font-mono text-[11px] text-slate-500">
+                            {source.domain}
+                          </span>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+              </article>
+            </RevealOnScroll>
           )
         })}
 
         {featuredRemaining.length > 0 ? (
-          <section className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
-            {featuredRemaining.map((item, idx) => (
-              <article
-                key={item.url}
-                className="flex gap-3 border-t border-slate-100 py-3 first:border-t-0"
-              >
-                <span className="w-8 shrink-0 font-mono text-2xl text-slate-300">
-                  {String(idx + 4).padStart(2, '0')}
-                </span>
+          <RevealOnScroll className="will-change-transform" delayMs={200}>
+            <section className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+              {featuredRemaining.map((item, idx) => (
+                <article
+                  key={item.url}
+                  className="flex gap-3 border-t border-slate-100 py-3 first:border-t-0"
+                >
+                  <span className="w-8 shrink-0 font-mono text-2xl text-slate-300">
+                    {String(idx + 4).padStart(2, '0')}
+                  </span>
 
-                <div className="min-w-0">
-                  <p className="text-base font-semibold leading-7 text-slate-900">
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className="transition hover:text-emerald-700"
-                    >
-                      {item.title}
-                    </a>
-                  </p>
+                  <div className="min-w-0">
+                    <p className="text-base font-semibold leading-7 text-slate-900">
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="transition hover:text-emerald-700"
+                      >
+                        {item.title}
+                      </a>
+                    </p>
 
-                  <p className="mt-1 text-sm text-slate-500">
-                    {item.sourceNames.join(' / ')}
-                    {' · '}
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className="rounded bg-slate-100 px-2 py-0.5 font-mono text-[11px] text-slate-500 transition hover:text-slate-700"
-                    >
-                      {domainFromUrl(item.url)}
-                    </a>
-                  </p>
-                </div>
-              </article>
-            ))}
-          </section>
+                    <p className="mt-1 text-sm text-slate-500">
+                      {item.sourceNames.join(' / ')}
+                      {' · '}
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="rounded bg-slate-100 px-2 py-0.5 font-mono text-[11px] text-slate-500 transition hover:text-slate-700"
+                      >
+                        {domainFromUrl(item.url)}
+                      </a>
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </section>
+          </RevealOnScroll>
         ) : null}
       </main>
 

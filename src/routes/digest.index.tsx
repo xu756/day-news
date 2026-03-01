@@ -1,3 +1,4 @@
+import { RevealOnScroll } from '#/components/RevealOnScroll'
 import {
   formatZhDateLabel,
   getDigestDays,
@@ -141,7 +142,10 @@ function DigestIndex() {
       ) : (
         <>
           {featured ? (
-            <div data-testid="featured-day-card">
+            <RevealOnScroll
+              className="will-change-transform"
+              data-testid="featured-day-card"
+            >
               <DayCard
                 day={featured.day}
                 slug={featured.lead.slug}
@@ -151,21 +155,28 @@ function DigestIndex() {
                 }
                 featured
               />
-            </div>
+            </RevealOnScroll>
           ) : null}
 
           <ul className="mt-5 space-y-4">
-            {archive.map((digestDay) => (
+            {archive.map((digestDay, index) => (
               <li key={digestDay.day}>
-                <DayCard
-                  day={digestDay.day}
-                  slug={digestDay.lead.slug}
-                  titles={digestDay.posts.slice(0, 3).map((post) => post.title)}
-                  candidateCount={
-                    getSourcesForDay(digestDay.day, digestDay.posts)
-                      .candidateCount
-                  }
-                />
+                <RevealOnScroll
+                  className="will-change-transform"
+                  delayMs={Math.min(index * 70, 420)}
+                >
+                  <DayCard
+                    day={digestDay.day}
+                    slug={digestDay.lead.slug}
+                    titles={digestDay.posts
+                      .slice(0, 3)
+                      .map((post) => post.title)}
+                    candidateCount={
+                      getSourcesForDay(digestDay.day, digestDay.posts)
+                        .candidateCount
+                    }
+                  />
+                </RevealOnScroll>
               </li>
             ))}
           </ul>
