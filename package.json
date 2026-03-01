@@ -13,7 +13,11 @@
     "lint": "eslint",
     "format": "prettier --check .",
     "check": "prettier --write . && eslint --fix",
-    "digest:generate": "bun scripts/digest/run.ts"
+    "digest:generate": "bun scripts/digest/run.ts",
+    "digest:test:picker": "vitest run --config vitest.digest.config.ts tests/digest/picker.test.ts",
+    "digest:test:sources": "vitest run --config vitest.digest.config.ts tests/digest/sources.fixture.test.ts",
+    "digest:test:sources:live": "RUN_LIVE_SOURCE_TESTS=1 vitest run --config vitest.digest.config.ts tests/digest/sources.live.test.ts",
+    "digest:test:playwright": "bun run build && vitest run --config vitest.digest.config.ts tests/digest/playwright.digest.test.ts"
   },
   "dependencies": {
     "@mozilla/readability": "^0.6.0",

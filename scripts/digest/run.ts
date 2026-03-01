@@ -4,11 +4,11 @@ import { clusterCandidates, dedupeCandidates, normalizeUrl } from './lib/dedupe'
 import type {
   PickedStory,
   RelatedStoryContext,
-  StoryCandidate,
   WrittenStory,
 } from './lib/llm'
-import { assertLlmConfigured, pickStories, writeMdx } from './lib/llm'
+import { assertLlmConfigured, writeMdx } from './lib/llm'
 import { findFirstOgImage, generateCoverImageIfEnabled } from './lib/ogImage'
+import { selectStoriesByAttention } from './lib/picker'
 import { fetchArticleContext } from './lib/parse'
 import { scoreCandidates } from './lib/score'
 import type { CandidateItem, SourceType } from './lib/types'
@@ -50,18 +50,6 @@ function slugify(value: string): string {
     .slice(0, 60)
 
   return slug || 'ai-digest-story'
-}
-
-function toStoryCandidates(items: CandidateItem[]): StoryCandidate[] {
-  return items.slice(0, 20).map((item) => ({
-    title: item.title,
-    url: item.url,
-    sourceName: item.sourceName,
-    sourceType: item.sourceType,
-    snippet: item.snippet,
-    score: item.score ?? 0,
-    publishedAt: item.publishedAt,
-  }))
 }
 
 function uniqueUrls(urls: string[]): string[] {
@@ -353,17 +341,7 @@ async function main(): Promise<void> {
     throw new Error('No candidates left after dedupe and scoring')
   }
 
-  const topCandidates = toStoryCandidates(scored)
-  const stories = await pickStories(topCandidates)
-
-  const fallbackStories = topCandidates.slice(0, STORIES_PER_DAY).map((candidate) => ({
-    headline: candidate.title,
-    category: 'AI 产业动态',
-    why: '按来源权重、时效性与多源交叉评分自动入选。',
-    relatedUrls: [candidate.url],
-  }))
-
-  const selectedStories = [...stories, ...fallbackStories].slice(0, STORIES_PER_DAY)
+  const selectedStories = selectStoriesByAttention(scored, STORIES_PER_DAY)
   const candidateItemsForDay = toDigestCandidateItems(scored)
 
   const candidateByUrl = new Map<string, CandidateItem>()

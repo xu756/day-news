@@ -34,6 +34,33 @@ Use `--force` to regenerate an existing day:
 bun run digest:generate --force
 ```
 
+## Selection logic (non-LLM)
+
+Story selection does not rely on LLM:
+
+- Fetch from configured primary sources (official/media/HN/HF papers)
+- Dedupe + cluster by URL/title similarity
+- Score by source weight, recency, HN engagement, cluster size
+- Pick top-attention stories from highest-ranked clusters
+
+LLM is only used for drafting article text from selected sources.
+
+## Tests
+
+```bash
+# deterministic picker unit tests
+bun run digest:test:picker
+
+# fixture-based source fetch tests (offline, stable)
+bun run digest:test:sources
+
+# live source tests (network required, optional)
+bun run digest:test:sources:live
+
+# playwright UI smoke test (build + candidate-list assertion)
+bun run digest:test:playwright
+```
+
 ## Run frontend
 
 ```bash
