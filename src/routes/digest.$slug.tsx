@@ -1,9 +1,9 @@
-import { MDXContent } from '@content-collections/mdx/react'
-import { createFileRoute, notFound } from '@tanstack/react-router'
-import { allDigests } from 'content-collections'
 import { MdxCallout } from '#/components/MdxCallout'
 import { MdxMetrics } from '#/components/MdxMetrics'
 import { SITE_URL } from '#/lib/site'
+import { MDXContent } from '@content-collections/mdx/react'
+import { createFileRoute, notFound } from '@tanstack/react-router'
+import { allDigests } from 'content-collections'
 
 const DEFAULT_OG_IMAGE = '/images/lagoon-1.svg'
 
@@ -33,7 +33,9 @@ export const Route = createFileRoute('/digest/$slug')({
     const canonicalSlug = encodeURIComponent(params.slug)
 
     return {
-      links: [{ rel: 'canonical', href: `${SITE_URL}/digest/${canonicalSlug}` }],
+      links: [
+        { rel: 'canonical', href: `${SITE_URL}/digest/${canonicalSlug}` },
+      ],
       meta: [
         { title },
         { name: 'description', content: description },
@@ -85,10 +87,14 @@ function DigestPost() {
         <h1 className="mb-0 mt-3 text-3xl leading-tight font-semibold text-[#1f322d] sm:text-[2.05rem]">
           {post.title}
         </h1>
-        <p className="mb-0 mt-2 text-sm text-[#6a7b72]">{formatDate(post.pubDate)}</p>
+        <p className="mb-0 mt-2 text-sm text-[#6a7b72]">
+          {formatDate(post.pubDate)}
+        </p>
 
         <section className="mt-6 rounded border border-[#d8e2dd] bg-[#f8fbf9] px-4 py-3">
-          <h2 className="m-0 text-sm font-semibold text-[#2e423c]">为什么是这篇</h2>
+          <h2 className="m-0 text-sm font-semibold text-[#2e423c]">
+            为什么是这篇
+          </h2>
           <p className="mb-0 mt-1.5 text-sm leading-6 text-[#5f7268]">
             {post.why ?? '该条目由来源权重、时效性与多源交叉评分综合入选。'}
           </p>
@@ -110,24 +116,31 @@ function DigestPost() {
           <ul className="mb-0 mt-3 space-y-2 pl-5 text-sm text-[#566960]">
             {(post.sources?.length
               ? post.sources
-              : post.sourceUrls.map((url) => ({ name: sourceNameFromUrl(url), url }))).map(
-              (source) => (
-                <li key={source.url}>
-                  {source.name}
-                  {' · '}
-                  <a href={source.url} target="_blank" rel="noreferrer noopener">
-                    {source.url}
-                  </a>
-                </li>
-              ),
-            )}
+              : post.sourceUrls.map((url) => ({
+                  name: sourceNameFromUrl(url),
+                  url,
+                }))
+            ).map((source) => (
+              <li key={source.url}>
+                {source.name}
+                {' · '}
+                <a href={source.url} target="_blank" rel="noreferrer noopener">
+                  {source.url}
+                </a>
+              </li>
+            ))}
           </ul>
         </section>
 
         {candidateItems.length > 0 ? (
-          <section id="candidate-list" className="mt-8 border-t border-[#dde5e1] pt-5">
+          <section
+            id="candidate-list"
+            className="mt-8 border-t border-[#dde5e1] pt-5"
+          >
             <header className="mb-3 flex flex-wrap items-end justify-between gap-x-3 gap-y-1">
-              <h2 className="m-0 text-lg font-semibold text-[#2e423c]">候选资讯</h2>
+              <h2 className="m-0 text-lg font-semibold text-[#2e423c]">
+                候选资讯
+              </h2>
               <p className="m-0 text-xs text-[#7d8d84]">
                 从 {candidateCount} 条资讯中筛选
               </p>

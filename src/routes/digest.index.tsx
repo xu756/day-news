@@ -1,6 +1,6 @@
+import { SITE_URL } from '#/lib/site'
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { allDigests } from 'content-collections'
-import { SITE_URL } from '#/lib/site'
 
 const canonical = `${SITE_URL}/digest`
 const DEFAULT_OG_IMAGE = `${SITE_URL}/images/lagoon-1.svg`
@@ -41,20 +41,19 @@ function DigestIndex() {
   const lookbackStart = Date.now() - LOOKBACK_DAYS * 24 * 60 * 60 * 1000
 
   const recent = [...allDigests]
-    .sort((a, b) => new Date(b.pubDate).valueOf() - new Date(a.pubDate).valueOf())
+    .sort(
+      (a, b) => new Date(b.pubDate).valueOf() - new Date(a.pubDate).valueOf(),
+    )
     .filter((item) => new Date(item.pubDate).valueOf() >= lookbackStart)
 
   const groupedByDay = Array.from(
-    recent.reduce(
-      (map, item) => {
-        const day = item.pubDate.slice(0, 10)
-        const current = map.get(day) ?? []
-        current.push(item)
-        map.set(day, current)
-        return map
-      },
-      new Map<string, typeof recent>(),
-    ),
+    recent.reduce((map, item) => {
+      const day = item.pubDate.slice(0, 10)
+      const current = map.get(day) ?? []
+      current.push(item)
+      map.set(day, current)
+      return map
+    }, new Map<string, typeof recent>()),
   )
 
   return (
@@ -100,9 +99,11 @@ function DigestIndex() {
                   {items.slice(0, 3).map((item, index) => {
                     const sourceNames = Array.from(
                       new Set(
-                        (item.sources?.length
+                        item.sources?.length
                           ? item.sources.map((source) => source.name)
-                          : item.sourceUrls.map((url) => sourceNameFromUrl(url))),
+                          : item.sourceUrls.map((url) =>
+                              sourceNameFromUrl(url),
+                            ),
                       ),
                     ).slice(0, 4)
 
